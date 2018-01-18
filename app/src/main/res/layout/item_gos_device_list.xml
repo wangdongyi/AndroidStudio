@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:paddingRight="-181dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:id="@+id/llLeft"
+            android:layout_width="50dp"
+            android:layout_height="42dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/img_bg_shape"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/imgLeft"
+                android:layout_width="46dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/fourth" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp">
+
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/tvDeviceName"
+                android:layout_alignTop="@+id/tvDeviceName"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="2dp"
+                android:background="@color/top_color" />
+
+            <TextView
+                android:id="@+id/tvDeviceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:layout_toEndOf="@+id/icon"
+                android:layout_toRightOf="@+id/icon"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="TextView"
+                android:textColor="@color/text_color"
+                android:textSize="17sp" />
+
+            <TextView
+                android:id="@+id/tvDeviceMac"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDeviceName"
+                android:layout_marginTop="7dp"
+                android:text="TextView"
+                android:textColor="@color/text_grey"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tvDeviceType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDeviceMac"
+                android:layout_marginTop="7dp"
+                android:text="TextView"
+                android:textColor="@color/text_color"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/waringImage"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:contentDescription="@string/about" />
+
+            <TextView
+                android:id="@+id/tvDeviceStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/text_color"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:id="@+id/imgRight"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp"
+                android:src="@drawable/button_more" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/delete1"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:background="@color/blue"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="修改设备"
+                android:textColor="@color/floralwhite"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/delete2"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
+            android:background="@color/tomato"
+            android:clickable="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/remove_bound"
+                android:textColor="@color/floralwhite"
+                android:textSize="15sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

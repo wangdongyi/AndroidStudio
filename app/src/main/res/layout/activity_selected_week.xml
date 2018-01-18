@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical">
+
+    <include layout="@layout/normal_title_layout" />
+
+    <RelativeLayout
+        android:id="@+id/layout_1"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星期一"
+            android:textColor="@color/text_black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/duihao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星期二"
+            android:textColor="@color/text_black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/duihao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_3"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星期三"
+            android:textColor="@color/text_black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/duihao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_4"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星期四"
+            android:textColor="@color/text_black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/duihao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_5"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星期五"
+            android:textColor="@color/text_black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/duihao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_6"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星期六"
+            android:textColor="@color/text_black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/duihao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_7"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="星期日"
+            android:textColor="@color/text_black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imageView_7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/duihao"
+            android:visibility="invisible" />
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
+
+    <include
+        android:id="@+id/layout_title"
+        layout="@layout/normal_title_layout" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_title"
+        android:fadingEdge="vertical"
+        android:scrollbars="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/top_color"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView_close_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/suo" />
+
+
+                <TextView
+                    android:id="@+id/textView_keller"
+                    android:layout_width="75dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/round_big_white"
+                    android:gravity="center"
+                    android:text="一键杀菌"
+                    android:textColor="@color/white"
+                    android:textSize="14.0dp" />
+
+                <Switch
+                    android:id="@+id/switch10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/textView_keller"
+                    android:checked="true"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:thumb="@drawable/my_thumb"
+                    android:track="@drawable/switch_setting_selector" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/top_color">
+
+                <TextView
+                    android:id="@+id/textView_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="15dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingStart="15dp"
+                    android:text="单温区"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/waringImage"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginRight="15dp" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/top_color"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="100dp"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/single_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Switch
+                                android:id="@+id/switch1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="47dp"
+                                android:checked="true"
+                                android:scaleX="0.5"
+                                android:scaleY="0.5"
+                                android:thumb="@drawable/my_thumb"
+                                android:track="@drawable/switch_setting_selector" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="77dp"
+                                android:text="单温区设备"
+                                android:textColor="@color/text_black"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="15dp"
+                            android:layout_marginTop="3dp"
+                            android:text="旋转按钮设定温度"
+                            android:textColor="@color/text_grey"
+                            android:textSize="14dp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/main_double_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:id="@+id/left_double_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/top_color"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <Switch
+                                    android:id="@+id/switch2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="47dp"
+                                    android:checked="true"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
+                                    android:textColor="@color/text_black"
+                                    android:textOff=""
+                                    android:textOn=""
+                                    android:thumb="@drawable/my_thumb"
+                                    android:track="@drawable/switch_setting_selector" />
+
+                                <TextView
+                                    android:id="@+id/left_double_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="77dp"
+                                    android:text="0℃"
+                                    android:textColor="@color/white"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+
+                            <TextView
+                                android:id="@+id/left_double_hint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginTop="5dp"
+                                android:text="左温区"
+                                android:textColor="@color/white"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/right_double_layout"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@color/white"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <Switch
+                                    android:id="@+id/switch3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginTop="47dp"
+                                    android:checked="true"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
+                                    android:textColor="@color/text_black"
+                                    android:textOff=""
+                                    android:textOn=""
+                                    android:thumb="@drawable/my_thumb"
+                                    android:track="@drawable/switch_setting_selector" />
+
+                                <TextView
+                                    android:id="@+id/right_double_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerHorizontal="true"
+                                    android:layout_marginTop="77dp"
+                                    android:text="0℃"
+                                    android:textColor="@color/text_black"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/right_double_hint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="15dp"
+                                android:layout_marginTop="5dp"
+                                android:text="右温区"
+                                android:textColor="@color/text_grey"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/main_six_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/line"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/line"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/left_one_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="0.5dp"
+                                android:layout_weight="1"
+                                android:background="@color/top_color"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <Switch
+                                        android:id="@+id/switch4"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="47dp"
+                                        android:checked="true"
+                                        android:scaleX="0.5"
+                                        android:scaleY="0.5"
+                                        android:textColor="@color/text_black"
+                                        android:textOff=""
+                                        android:textOn=""
+                                        android:thumb="@drawable/my_thumb"
+                                        android:track="@drawable/switch_setting_selector" />
+
+                                    <TextView
+                                        android:id="@+id/left_one_textView"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="77dp"
+                                        android:text="0℃"
+                                        android:textColor="@color/white"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold" />
+                                </RelativeLayout>
+
+
+                                <TextView
+                                    android:id="@+id/left_one_hint"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="左上温区"
+                                    android:textColor="@color/white"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/right_one_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <Switch
+                                        android:id="@+id/switch5"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginTop="47dp"
+                                        android:checked="true"
+                                        android:scaleX="0.5"
+                                        android:scaleY="0.5"
+                                        android:textColor="@color/text_black"
+                                        android:textOff=""
+                                        android:textOn=""
+                                        android:thumb="@drawable/my_thumb"
+                                        android:track="@drawable/switch_setting_selector" />
+
+                                    <TextView
+                                        android:id="@+id/right_one_textView"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerHorizontal="true"
+                                        android:layout_marginTop="77dp"
+                                        android:text="0℃"
+                                        android:textColor="@color/text_black"
+                                        android:textSize="24sp"
+                                        android:textStyle="bold" />
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/right_one_hint"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="15dp"
+                                    android:layout_marginTop="5dp"
+                                    android:text="右上温区"
+                                    android:textColor="@color/text_grey"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="109dp"
+                            android:layout_marginTop="0.5dp"
+                            android:background="@color/line"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/left_two_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="0.5dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Switch
+                                    android:id="@+id/switch6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:checked="true"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
+                                    android:textColor="@color/text_black"
+                                    android:textOff=""
+                                    android:textOn=""
+                                    android:thumb="@drawable/my_thumb"
+                                    android:track="@drawable/switch_setting_selector" />
+
+                                <TextView
+                                    android:id="@+id/left_two_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="-20dp"
+                                    android:text="0℃"
+                                    android:textColor="@color/text_black"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/left_two_hint"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="左中温区"
+                                    android:textColor="@color/text_grey"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/right_two_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Switch
+                                    android:id="@+id/switch7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:checked="true"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
+                                    android:textColor="@color/text_black"
+                                    android:textOff=""
+                                    android:textOn=""
+                                    android:thumb="@drawable/my_thumb"
+                                    android:track="@drawable/switch_setting_selector" />
+
+                                <TextView
+                                    android:id="@+id/right_two_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="-20dp"
+                                    android:text="0℃"
+                                    android:textColor="@color/text_black"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/right_two_hint"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="右中温区"
+                                    android:textColor="@color/text_grey"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="109dp"
+                            android:layout_marginTop="0.5dp"
+                            android:background="@color/line"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/left_three_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="0.5dp"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Switch
+                                    android:id="@+id/switch8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="start"
+                                    android:checked="true"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
+                                    android:textColor="@color/text_black"
+                                    android:textOff=""
+                                    android:textOn=""
+                                    android:thumb="@drawable/my_thumb"
+                                    android:track="@drawable/switch_setting_selector" />
+
+                                <TextView
+                                    android:id="@+id/left_three_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="-20dp"
+                                    android:text="0℃"
+                                    android:textColor="@color/text_black"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/left_three_hint"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="左下温区"
+                                    android:textColor="@color/text_grey"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/right_three_layout"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/white"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <Switch
+                                    android:id="@+id/switch9"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:checked="true"
+                                    android:scaleX="0.5"
+                                    android:scaleY="0.5"
+                                    android:textColor="@color/text_black"
+                                    android:textOff=""
+                                    android:textOn=""
+                                    android:thumb="@drawable/my_thumb"
+                                    android:track="@drawable/switch_setting_selector" />
+
+                                <TextView
+                                    android:id="@+id/right_three_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="-20dp"
+                                    android:text="0℃"
+                                    android:textColor="@color/text_black"
+                                    android:textSize="24sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/right_three_hint"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="右下温区"
+                                    android:textColor="@color/text_grey"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_automatic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="#eeeeee" />
+
+                        <RelativeLayout
+                            android:id="@+id/start_time_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:background="@drawable/select_transparent"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/textView_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:text="开始时间"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView_start_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textColor="@color/text_grey"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:layout_width="7dp"
+                                android:layout_height="12dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/right_icon" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/line" />
+
+                        <RelativeLayout
+                            android:id="@+id/end_time_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:background="@drawable/select_transparent"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/textView_end"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginTop="12dp"
+                                android:gravity="center"
+                                android:text="结束时间"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView_end_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textColor="@color/text_grey"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:layout_width="7dp"
+                                android:layout_height="12dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/right_icon" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:background="@color/line" />
+
+                        <RelativeLayout
+                            android:id="@+id/repeatlayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:background="@drawable/select_transparent"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/textView_repeat"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:text="重复"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+
+                            <ImageView
+                                android:layout_width="7dp"
+                                android:layout_height="12dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/right_icon" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/main_qualified_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="#eeeeee" />
+
+
+                        <RelativeLayout
+                            android:id="@+id/qualified_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="44dp"
+                            android:background="@drawable/select_transparent"
+                            android:paddingLeft="15dp"
+                            android:paddingRight="15dp">
+
+                            <TextView
+                                android:id="@+id/textView_qualified"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentTop="true"
+                                android:layout_marginTop="12dp"
+                                android:gravity="center"
+                                android:text="限定时间"
+                                android:textColor="@color/text_black"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/textView_qualified_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginRight="10dp"
+                                android:textColor="@color/text_grey"
+                                android:textSize="12sp" />
+
+                            <ImageView
+                                android:layout_width="7dp"
+                                android:layout_height="12dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:src="@mipmap/right_icon" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="145dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25dp"
+                    android:orientation="vertical">
+
+                    <wdy.business.view.CircleSeekBar
+                        android:id="@+id/circle_seekBar"
+                        android:layout_width="145dp"
+                        android:layout_height="145dp"
+                        android:layout_centerInParent="true"
+                        app:wheel_max_process="75" />
+
+                    <TextView
+                        android:id="@+id/textView_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="35dp"
+                        android:text="0"
+                        android:textColor="@color/top_color"
+                        android:textSize="40sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView_num"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:text="（℃）"
+                        android:textColor="@color/text_black"
+                        android:textSize="10sp" />
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/imageView_jian"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/select_transparent"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/jian" />
+
+                <ImageView
+                    android:id="@+id/imageView_jia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="35dp"
+                    android:layout_marginRight="35dp"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/select_transparent"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/jia" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/button"
+                style="@style/ButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:text="提交" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:text="data" />
+
+        <TextView
+            android:id="@+id/tv_data_data"
+            android:layout_width="110dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="end"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:text="time" />
+
+        <EditText
+            android:id="@+id/tv_data_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="70dp"
+            android:gravity="end"
+            android:textColor="@color/gray"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/close_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView_close"
+            android:layout_width="match_parent"
+            android:layout_height="1000dp"
+            android:contentDescription="@string/app_name"
+            android:src="#55000000" />
+
+        <LinearLayout
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:orientation="vertical">
+
+            <View
+                style="@style/titleStyles"
+                android:layout_width="wrap_content"
+                android:background="@android:color/transparent" />
+
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/imageView_back_close"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/app_name"
+                android:scaleType="centerInside"
+                app:srcCompat="@drawable/ic_back" />
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/imageView_open_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="75dp"
+            android:contentDescription="@string/app_name"
+            android:scaleType="centerInside"
+            android:src="@mipmap/suo" />
+    </RelativeLayout>
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/nice_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_title"
+        android:layout_centerHorizontal="true"
+        android:background="@color/top_color"
+        app:arrowDrawable="@mipmap/arrow_down"
+        app:backgroundSelector="@color/top_color"
+        app:textTint="@color/white" />
+
+</RelativeLayout>

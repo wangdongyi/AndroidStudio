@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="def_wheel_color">#4E4988</color>
+    <color name="def_reached_color">#FFD</color>
+    <color name="def_pointer_color">#FFFFFF</color>
+    <color name="half_transparent">#11000000</color>
+</resources>

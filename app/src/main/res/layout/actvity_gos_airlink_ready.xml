@@ -65,6 +65,13 @@
             android:gravity="center_horizontal"
             android:text="@string/moudlechoose" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/moudlechoose"
+            android:layout_margin="10dp"
+            android:text="第一步：XXXXX\n第二步：XXXXXX\n第三步：XXXXXX" />
+
         <com.gizwits.opensource.appkit.view.GifView
             android:id="@+id/softreset"
             android:layout_width="match_parent"
@@ -74,6 +81,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
-            android:enabled="false" />
+            android:enabled="false"
+            android:visibility="gone" />
     </RelativeLayout>
+
 </LinearLayout>

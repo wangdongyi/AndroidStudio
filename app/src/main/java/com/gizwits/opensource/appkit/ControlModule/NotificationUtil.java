@@ -1,12 +1,19 @@
 package com.gizwits.opensource.appkit.ControlModule;
 
+import android.annotation.SuppressLint;
+import android.app.AppOpsManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
-import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.support.v4.app.NotificationCompat;
+import android.widget.Toast;
 
 import com.gizwits.opensource.appkit.R;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * 作者：王东一
@@ -17,7 +24,7 @@ public class NotificationUtil {
     private static NotificationUtil mInstance;
     private NotificationManager mNotificationManager;
 
-    public static NotificationUtil getInstance(Context context) {
+    static NotificationUtil getInstance(Context context) {
         if (mInstance == null) {
             synchronized (NotificationUtil.class) {
                 if (mInstance == null) {
@@ -32,8 +39,12 @@ public class NotificationUtil {
         mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
-    public void sendNotification(Context context, int type) {
+    void sendNotification(Context context, int type) {
         if (type == 0) {
+            return;
+        }
+        if (!isNotificationEnabled(context)) {
+            Toast.makeText(context, "通知权限 未开启", Toast.LENGTH_LONG).show();
             return;
         }
 //        0表示无故障
@@ -63,5 +74,36 @@ public class NotificationUtil {
                 .setContentText(content)
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE);
         mNotificationManager.notify(3, builder.build());
+    }
+
+    private static final String CHECK_OP_NO_THROW = "checkOpNoThrow";
+    private static final String OP_POST_NOTIFICATION = "OP_POST_NOTIFICATION";
+
+    @SuppressLint("NewApi")
+    public static boolean isNotificationEnabled(Context context) {
+        AppOpsManager mAppOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+        ApplicationInfo appInfo = context.getApplicationInfo();
+        String pkg = context.getApplicationContext().getPackageName();
+        int uid = appInfo.uid;
+        Class appOpsClass = null;
+      /* Context.APP_OPS_MANAGER */
+        try {
+            appOpsClass = Class.forName(AppOpsManager.class.getName());
+            Method checkOpNoThrowMethod = appOpsClass.getMethod(CHECK_OP_NO_THROW, Integer.TYPE, Integer.TYPE, String.class);
+            Field opPostNotificationValue = appOpsClass.getDeclaredField(OP_POST_NOTIFICATION);
+            int value = (Integer) opPostNotificationValue.get(Integer.class);
+            return ((Integer) checkOpNoThrowMethod.invoke(mAppOps, value, uid, pkg) == AppOpsManager.MODE_ALLOWED);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

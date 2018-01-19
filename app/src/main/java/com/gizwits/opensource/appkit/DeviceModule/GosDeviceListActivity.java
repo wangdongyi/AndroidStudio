@@ -583,7 +583,6 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
     protected void didUserLogin(GizWifiErrorCode result, java.lang.String uid, java.lang.String token) {
 
         if (GizWifiErrorCode.GIZ_SDK_SUCCESS == result) {
-            loginStatus = 2;
             this.uid = uid;
             this.token = token;
             spf.edit().putString("Uid", this.uid).commit();
@@ -592,11 +591,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
             //  绑定推送
             GosPushManager.pushBindService(token);
         } else {
-            loginStatus = 0;
-            if (GosDeploy.setAnonymousLogin()) {
-                tryUserLoginAnonymous();
-            }
-
+            Toast.makeText(this, "登录失效请重启登录", toastTime).show();
         }
     }
 
@@ -831,10 +826,6 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                 if (threeSeconds <= 0) {
                     tsTimer.cancel();
                     handler.sendEmptyMessage(GETLIST);
-                } else {
-                    if (loginStatus == 4) {
-                        tsTimer.cancel();
-                    }
                 }
             }
         }, 1000, 1000);

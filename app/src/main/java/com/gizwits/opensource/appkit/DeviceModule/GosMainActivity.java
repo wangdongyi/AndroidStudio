@@ -139,7 +139,6 @@ public class GosMainActivity extends GosDeviceModuleBaseActivity {
     @Override
     public void onResume() {
 
-        // TODO Auto-generated method stub
         super.onResume();
         switch (viewPagerSelected) {
             case 0:
@@ -246,7 +245,7 @@ public class GosMainActivity extends GosDeviceModuleBaseActivity {
 
         switch (viewPagerSelected) {
             case 0:
-                getMenuInflater().inflate(R.menu.devicelist_logout, menu);
+//                getMenuInflater().inflate(R.menu.devicelist_logout, menu);
                 break;
 
             case 1:

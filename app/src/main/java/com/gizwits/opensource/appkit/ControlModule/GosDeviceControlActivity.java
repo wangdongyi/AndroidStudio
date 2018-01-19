@@ -1441,6 +1441,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     @SuppressLint("SetTextI18n")
     protected void updateUI() {
         changeMachine();
+        NotificationUtil.getInstance(GosDeviceControlActivity.this).sendNotification(this,Waring);
         switch11.setChecked(switch1Selected);//总开关状态
         switch (type) {
             case 0:

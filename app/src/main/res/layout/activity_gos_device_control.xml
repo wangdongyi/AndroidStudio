@@ -28,13 +28,37 @@
                 android:background="@color/top_color"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/imageView_close_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                <TextView
+                    android:id="@+id/close_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginStart="25dp"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/suo" />
+                    android:text="总开关"
+                    android:textColor="@color/white"
+                    android:textSize="15.0dp" />
+
+                <Switch
+                    android:id="@+id/switch11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textView_keller"
+                    android:checked="true"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:thumb="@drawable/my_thumb"
+                    android:track="@drawable/switch_setting_selector" />
+
+                <org.angmarch.views.NiceSpinner
+                    android:id="@+id/nice_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    app:arrowDrawable="@mipmap/arrow_down"
+                    app:backgroundSelector="@color/top_color"
+                    app:textTint="@color/white" />
 
 
                 <TextView
@@ -790,7 +814,7 @@
                         android:layout_width="145dp"
                         android:layout_height="145dp"
                         android:layout_centerInParent="true"
-                        app:wheel_max_process="75" />
+                        app:wheel_max_process="40" />
 
                     <TextView
                         android:id="@+id/textView_num"
@@ -915,7 +939,7 @@
             android:src="#55000000" />
 
         <LinearLayout
-            android:layout_width="50dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:orientation="vertical">
@@ -925,37 +949,34 @@
                 android:layout_width="wrap_content"
                 android:background="@android:color/transparent" />
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/imageView_back_close"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@android:color/transparent"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerInside"
-                app:srcCompat="@drawable/ic_back" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+
+                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/imageView_back_close"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    app:srcCompat="@drawable/ic_back" />
+
+                <ImageView
+                    android:id="@+id/imageView_open_button"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/close" />
+            </RelativeLayout>
         </LinearLayout>
 
 
-        <ImageView
-            android:id="@+id/imageView_open_button"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="75dp"
-            android:contentDescription="@string/app_name"
-            android:scaleType="centerInside"
-            android:src="@mipmap/suo" />
     </RelativeLayout>
 
-    <org.angmarch.views.NiceSpinner
-        android:id="@+id/nice_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_title"
-        android:layout_centerHorizontal="true"
-        android:background="@color/top_color"
-        app:arrowDrawable="@mipmap/arrow_down"
-        app:backgroundSelector="@color/top_color"
-        app:textTint="@color/white" />
 
 </RelativeLayout>

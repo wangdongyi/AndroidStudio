@@ -533,7 +533,7 @@ public class CircleSeekBar extends View {
     }
 
     public void setCurProcess(int curProcess) {
-        this.mCurProcess = curProcess > mMaxProcess ? mMaxProcess : curProcess;
+        this.mCurProcess = curProcess > 40 ? 40 : curProcess;
         if (mChangListener != null) {
             mChangListener.onChanged(this, curProcess);
         }

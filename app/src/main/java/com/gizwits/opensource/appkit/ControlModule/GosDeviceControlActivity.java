@@ -71,8 +71,7 @@ import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.s
 import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected6;
 import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected7;
 
-public class GosDeviceControlActivity extends GosControlModuleBaseActivity
-        implements OnClickListener, OnEditorActionListener {
+public class GosDeviceControlActivity extends GosControlModuleBaseActivity implements OnClickListener, OnEditorActionListener {
 
     /**
      * 设备列表传入的设备变量
@@ -93,7 +92,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
     private AppCompatImageView imageView_back_close;
     private TextView textView_title;
     private AppCompatImageView imageView_right;
-    private ImageView imageView_close_button;
     private TextView textView_keller;
     private TextView textView_type;
     private LinearLayout single_layout;
@@ -162,6 +160,8 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
     private Switch switch8;
     private Switch switch9;
     private Switch switch10;
+    private TextView close_button;
+    private Switch switch11;
 
     private enum handler_key {
         //更新界面
@@ -211,7 +211,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
     }
 
     private void initDate() {
-        dip50 = CodeUtil.dip2px(this, 100);
+        dip50 = CodeUtil.dip2px(this, 50);
     }
 
     private void initView() {
@@ -225,7 +225,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
         imageView_back_close = (AppCompatImageView) findViewById(R.id.imageView_back_close);
         textView_title = (TextView) findViewById(R.id.textView_title);
         imageView_right = (AppCompatImageView) findViewById(R.id.imageView_right);
-        imageView_close_button = (ImageView) findViewById(R.id.imageView_close_button);
         textView_keller = (TextView) findViewById(R.id.textView_keller);
         textView_type = (TextView) findViewById(R.id.textView_type);
         single_layout = (LinearLayout) findViewById(R.id.single_layout);
@@ -284,7 +283,9 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
         switch8 = (Switch) findViewById(R.id.switch8);
         switch9 = (Switch) findViewById(R.id.switch9);
         switch10 = (Switch) findViewById(R.id.switch10);
+        switch11 = (Switch) findViewById(R.id.switch11);
         waringImage = (ImageView) findViewById(R.id.waringImage);
+        close_button = (TextView) findViewById(R.id.close_button);
     }
 
     //关机动画
@@ -293,7 +294,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             if (isFirst) {
                 animator = ViewAnimationUtils.createCircularReveal(
                         imageView_close,
-                        CodeUtil.dip2px(this, 25),
+                        CodeUtil.getScreenWidth(this) - CodeUtil.dip2px(this, 25),
                         dip50,
                         0,
                         CodeUtil.getScreenHeight(this)
@@ -302,7 +303,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             } else {
                 animator = ViewAnimationUtils.createCircularReveal(
                         imageView_close,
-                        CodeUtil.dip2px(this, 25),
+                        CodeUtil.getScreenWidth(this) - CodeUtil.dip2px(this, 25),
                         dip50,
                         CodeUtil.getScreenHeight(this), 0
 
@@ -314,6 +315,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 public void onAnimationStart(Animator animation) {
                     if (!isFirst) {
                         close_layout.setVisibility(View.VISIBLE);
+                        imageView_right.setVisibility(View.INVISIBLE);
                     }
                 }
 
@@ -321,6 +323,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 public void onAnimationEnd(Animator animation) {
                     if (isFirst) {
                         close_layout.setVisibility(View.INVISIBLE);
+                        imageView_right.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -346,7 +349,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
     }
 
     private void initEvent() {
-        setTitle(mDevice.getProductName());
+        setTitle(getDeviceName());
         setRightImage(true);
         clean();
         initClick();
@@ -399,35 +402,35 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
         imageView_right.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
-                if (rightOpen) {
-                    setRightImage(false);
-                    nice_spinner.setClickable(false);
-                } else {
-                    setRightImage(true);
-                    nice_spinner.setClickable(true);
-                }
-            }
-        });
-        imageView_close_button.setOnClickListener(new NoDoubleClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
+//                if (rightOpen) {
                 initAnimation();
-                sendCommand(KEY_DATA14, false);
-                switch1Selected = false;
-                MyGizWifiDevice myGizWifiDevice=new MyGizWifiDevice();
-                myGizWifiDevice.setWaring(Waring);
-                myGizWifiDevice.setOpen(switch1Selected);
-                myGizWifiDevice.setGizWifiDevice(mDevice);
-                EventBus.getDefault().post(new MessageEvent("刷新", myGizWifiDevice));
+                imageView_right.setVisibility(View.INVISIBLE);
+//                } else {
+//                    setRightImage(true);
+//                    nice_spinner.setClickable(true);
+//                }
             }
         });
+//        switch11.setOnClickListener(new NoDoubleClickListener() {
+//            @Override
+//            protected void onNoDoubleClick(View v) {
+//                initAnimation();
+//                sendCommand(KEY_DATA14, false);
+//                switch1Selected = false;
+//                MyGizWifiDevice myGizWifiDevice = new MyGizWifiDevice();
+//                myGizWifiDevice.setWaring(Waring);
+//                myGizWifiDevice.setOpen(switch1Selected);
+//                myGizWifiDevice.setGizWifiDevice(mDevice);
+//                EventBus.getDefault().post(new MessageEvent("刷新", myGizWifiDevice));
+//            }
+//        });
         imageView_open_button.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
                 initAnimation();
                 sendCommand(KEY_DATA14, true);
                 switch1Selected = true;
-                MyGizWifiDevice myGizWifiDevice=new MyGizWifiDevice();
+                MyGizWifiDevice myGizWifiDevice = new MyGizWifiDevice();
                 myGizWifiDevice.setWaring(Waring);
                 myGizWifiDevice.setOpen(switch1Selected);
                 myGizWifiDevice.setGizWifiDevice(mDevice);
@@ -450,7 +453,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
         imageView_jia.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (circle_seekBar.getCurProcess() < 75)
+                if (circle_seekBar.getCurProcess() < 60)
                     circle_seekBar.setCurProcess(circle_seekBar.getCurProcess() + 1);
             }
         });
@@ -512,8 +515,9 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 left_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
-                circle_seekBar.setCurProcess(selectedValue.get(0));
-                if (switch2Selected) {
+
+                circle_seekBar.setCurProcess(selectedValue.get(0)-20);
+                if (switch2.isChecked()) {
                     left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
@@ -524,7 +528,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                     imageView_jian.setClickable(false);
                     imageView_jia.setClickable(false);
                 }
-                if (!switch3Selected) {
+                if (!switch3.isChecked()) {
                     right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.gray));
                 } else {
                     right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
@@ -535,12 +539,12 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onClick(View v) {
                 selectedPosition = 1;
-                circle_seekBar.setCurProcess(selectedValue.get(1));
+                circle_seekBar.setCurProcess(selectedValue.get(1)-20);
                 right_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 left_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
-                if (switch3Selected) {
+                if (switch3.isChecked()) {
                     right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
@@ -551,7 +555,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                     imageView_jian.setClickable(false);
                     imageView_jia.setClickable(false);
                 }
-                if (!switch2Selected) {
+                if (!switch2.isChecked()) {
                     left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.gray));
                 } else {
                     left_double_layout.setBackgroundResource(R.color.white);
@@ -610,7 +614,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //单独开关
-                sendCommand(KEY_DATA15, isChecked);
                 if (isChecked) {
                     single_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                     circle_seekBar.setEnabled(true);
@@ -628,8 +631,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //双开关
-                sendCommand(KEY_DATA15, isChecked);
-                switch2Selected = isChecked;
                 if (isChecked) {
                     if (selectedPosition == 0) {
                         left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
@@ -651,8 +652,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //双开关
-                sendCommand(KEY_DATA16, isChecked);
-                switch2Selected = isChecked;
                 if (isChecked) {
                     if (selectedPosition == 1) {
                         right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
@@ -674,8 +673,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //6温区
-                sendCommand(KEY_DATA15, isChecked);
-                switch2Selected = isChecked;
                 if (isChecked) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
@@ -692,8 +689,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //6温区
-                sendCommand(KEY_DATA16, isChecked);
-                switch3Selected = isChecked;
                 if (isChecked) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
@@ -710,8 +705,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //6温区
-                sendCommand(KEY_DATA17, isChecked);
-                switch4Selected = isChecked;
                 if (isChecked) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
@@ -728,8 +721,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //6温区
-                sendCommand(KEY_DATA18, isChecked);
-                switch5Selected = isChecked;
                 if (isChecked) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
@@ -746,8 +737,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //6温区
-                sendCommand(KEY_DATA19, isChecked);
-                switch6Selected = isChecked;
                 if (isChecked) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
@@ -764,8 +753,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //6温区
-                sendCommand(KEY_DATA20, isChecked);
-                switch7Selected = isChecked;
                 if (isChecked) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
@@ -778,10 +765,10 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 selectedSix();
             }
         });
-        switch10.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        switch11.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                sendCommand(KEY_DATA21, isChecked);
+                closeAllSwitch(isChecked);
             }
         });
     }
@@ -858,7 +845,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
         circle_seekBar.setOnSeekBarChangeListener(new CircleSeekBar.OnSeekBarChangeListener() {
             @Override
             public void onChanged(CircleSeekBar seekbar, int curValue) {
-                setSelectedNum(curValue);
+                setSelectedNum(curValue+20);
 
             }
         });
@@ -941,22 +928,22 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
     private void upSelectedValue() {
         switch (type) {
             case 0://单温区
-                circle_seekBar.setCurProcess(Temp_Left1);
+                circle_seekBar.setCurProcess(Temp_Left1-20);
                 break;
             case 1://双温区
                 switch (selectedPosition) {
                     case 0://左温区
-                        circle_seekBar.setCurProcess(Temp_Left1);
+                        circle_seekBar.setCurProcess(Temp_Left1-20);
                         break;
                     case 1:
-                        circle_seekBar.setCurProcess(Temp_Right1);
+                        circle_seekBar.setCurProcess(Temp_Right1-20);
                         break;
                 }
                 break;
             case 2:
                 switch (selectedPosition) {
                     case 0:
-                        circle_seekBar.setCurProcess(Temp_Left1);
+                        circle_seekBar.setCurProcess(Temp_Left1-20);
                         if (switch2Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -968,7 +955,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                         }
                         break;
                     case 1:
-                        circle_seekBar.setCurProcess(Temp_Right1);
+                        circle_seekBar.setCurProcess(Temp_Right1-20);
                         if (switch3Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -980,7 +967,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                         }
                         break;
                     case 2:
-                        circle_seekBar.setCurProcess(Temp_Left2);
+                        circle_seekBar.setCurProcess(Temp_Left2-20);
                         if (switch4Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -992,7 +979,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                         }
                         break;
                     case 3:
-                        circle_seekBar.setCurProcess(Temp_Right2);
+                        circle_seekBar.setCurProcess(Temp_Right2-20);
                         if (switch5Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -1004,7 +991,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                         }
                         break;
                     case 4:
-                        circle_seekBar.setCurProcess(Temp_Left3);
+                        circle_seekBar.setCurProcess(Temp_Left3-20);
                         if (switch6Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -1016,7 +1003,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                         }
                         break;
                     case 5:
-                        circle_seekBar.setCurProcess(Temp_Right3);
+                        circle_seekBar.setCurProcess(Temp_Right3-20);
                         if (switch7Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -1050,13 +1037,13 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
     private void selectedSix() {
         switch (selectedPosition) {
             case 0:
-                if (switch2Selected)
+                if (switch4.isChecked())
                     left_one_layout.setBackgroundResource(R.color.top_color);
                 else
                     left_one_layout.setBackgroundResource(R.color.gray);
                 left_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 left_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                if (switch2Selected) {
+                if (switch4.isChecked()) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
                     imageView_jia.setClickable(true);
@@ -1065,35 +1052,35 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                     imageView_jian.setClickable(false);
                     imageView_jia.setClickable(false);
                 }
-                if (switch3Selected)
+                if (switch5.isChecked())
                     right_one_layout.setBackgroundResource(R.color.white);
                 else
                     right_one_layout.setBackgroundResource(R.color.gray);
                 right_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch4Selected)
+                if (switch6.isChecked())
                     left_two_layout.setBackgroundResource(R.color.white);
                 else
                     left_two_layout.setBackgroundResource(R.color.gray);
                 left_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch5Selected)
+                if (switch7.isChecked())
                     right_two_layout.setBackgroundResource(R.color.white);
                 else
                     right_two_layout.setBackgroundResource(R.color.gray);
                 right_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch6Selected)
+                if (switch8.isChecked())
                     left_three_layout.setBackgroundResource(R.color.white);
                 else
                     left_three_layout.setBackgroundResource(R.color.gray);
                 left_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch7Selected)
+                if (switch9.isChecked())
                     right_three_layout.setBackgroundResource(R.color.white);
                 else
                     right_three_layout.setBackgroundResource(R.color.gray);
@@ -1102,20 +1089,20 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 circle_seekBar.setCurProcess(selectedValue.get(0));
                 break;
             case 1:
-                if (switch2Selected)
+                if (switch4.isChecked())
                     left_one_layout.setBackgroundResource(R.color.white);
                 else
                     left_one_layout.setBackgroundResource(R.color.gray);
                 left_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch3Selected)
+                if (switch5.isChecked())
                     right_one_layout.setBackgroundResource(R.color.top_color);
                 else
                     right_one_layout.setBackgroundResource(R.color.gray);
                 right_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                if (switch3Selected) {
+                if (switch5.isChecked()) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
                     imageView_jia.setClickable(true);
@@ -1124,28 +1111,28 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                     imageView_jian.setClickable(false);
                     imageView_jia.setClickable(false);
                 }
-                if (switch4Selected)
+                if (switch6.isChecked())
                     left_two_layout.setBackgroundResource(R.color.white);
                 else
                     left_two_layout.setBackgroundResource(R.color.gray);
                 left_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch5Selected)
+                if (switch7.isChecked())
                     right_two_layout.setBackgroundResource(R.color.white);
                 else
                     right_two_layout.setBackgroundResource(R.color.gray);
                 right_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch6Selected)
+                if (switch8.isChecked())
                     left_three_layout.setBackgroundResource(R.color.white);
                 else
                     left_three_layout.setBackgroundResource(R.color.gray);
                 left_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch7Selected)
+                if (switch9.isChecked())
                     right_three_layout.setBackgroundResource(R.color.white);
                 else
                     right_three_layout.setBackgroundResource(R.color.gray);
@@ -1154,27 +1141,27 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 circle_seekBar.setCurProcess(selectedValue.get(1));
                 break;
             case 2:
-                if (switch2Selected)
+                if (switch4.isChecked())
                     left_one_layout.setBackgroundResource(R.color.white);
                 else
                     left_one_layout.setBackgroundResource(R.color.gray);
                 left_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_gray));
 
-                if (switch3Selected)
+                if (switch5.isChecked())
                     right_one_layout.setBackgroundResource(R.color.white);
                 else
                     right_one_layout.setBackgroundResource(R.color.gray);
                 right_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch4Selected)
+                if (switch6.isChecked())
                     left_two_layout.setBackgroundResource(R.color.top_color);
                 else
                     left_two_layout.setBackgroundResource(R.color.gray);
                 left_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 left_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                if (switch4Selected) {
+                if (switch6.isChecked()) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
                     imageView_jia.setClickable(true);
@@ -1183,21 +1170,21 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                     imageView_jian.setClickable(false);
                     imageView_jia.setClickable(false);
                 }
-                if (switch5Selected)
+                if (switch7.isChecked())
                     right_two_layout.setBackgroundResource(R.color.white);
                 else
                     right_two_layout.setBackgroundResource(R.color.gray);
                 right_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch6Selected)
+                if (switch8.isChecked())
                     left_three_layout.setBackgroundResource(R.color.white);
                 else
                     left_three_layout.setBackgroundResource(R.color.gray);
                 left_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch7Selected)
+                if (switch9.isChecked())
                     right_three_layout.setBackgroundResource(R.color.white);
                 else
                     right_three_layout.setBackgroundResource(R.color.gray);
@@ -1206,34 +1193,34 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 circle_seekBar.setCurProcess(selectedValue.get(2));
                 break;
             case 3:
-                if (switch2Selected)
+                if (switch4.isChecked())
                     left_one_layout.setBackgroundResource(R.color.white);
                 else
                     left_one_layout.setBackgroundResource(R.color.gray);
                 left_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_gray));
 
-                if (switch3Selected)
+                if (switch5.isChecked())
                     right_one_layout.setBackgroundResource(R.color.white);
                 else
                     right_one_layout.setBackgroundResource(R.color.gray);
                 right_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch4Selected)
+                if (switch6.isChecked())
                     left_two_layout.setBackgroundResource(R.color.white);
                 else
                     left_two_layout.setBackgroundResource(R.color.gray);
                 left_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch5Selected)
+                if (switch7.isChecked())
                     right_two_layout.setBackgroundResource(R.color.top_color);
                 else
                     right_two_layout.setBackgroundResource(R.color.gray);
                 right_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                if (switch5Selected) {
+                if (switch7.isChecked()) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
                     imageView_jia.setClickable(true);
@@ -1242,14 +1229,14 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                     imageView_jian.setClickable(false);
                     imageView_jia.setClickable(false);
                 }
-                if (switch6Selected)
+                if (switch8.isChecked())
                     left_three_layout.setBackgroundResource(R.color.white);
                 else
                     left_three_layout.setBackgroundResource(R.color.gray);
                 left_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch7Selected)
+                if (switch9.isChecked())
                     right_three_layout.setBackgroundResource(R.color.white);
                 else
                     right_three_layout.setBackgroundResource(R.color.gray);
@@ -1258,41 +1245,41 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 circle_seekBar.setCurProcess(selectedValue.get(3));
                 break;
             case 4:
-                if (switch2Selected)
+                if (switch4.isChecked())
                     left_one_layout.setBackgroundResource(R.color.white);
                 else
                     left_one_layout.setBackgroundResource(R.color.gray);
                 left_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_gray));
 
-                if (switch3Selected)
+                if (switch5.isChecked())
                     right_one_layout.setBackgroundResource(R.color.white);
                 else
                     right_one_layout.setBackgroundResource(R.color.gray);
                 right_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch4Selected)
+                if (switch6.isChecked())
                     left_two_layout.setBackgroundResource(R.color.white);
                 else
                     left_two_layout.setBackgroundResource(R.color.gray);
                 left_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch5Selected)
+                if (switch7.isChecked())
                     right_two_layout.setBackgroundResource(R.color.white);
                 else
                     right_two_layout.setBackgroundResource(R.color.gray);
                 right_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch6Selected)
+                if (switch8.isChecked())
                     left_three_layout.setBackgroundResource(R.color.top_color);
                 else
                     left_three_layout.setBackgroundResource(R.color.gray);
                 left_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 left_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                if (switch6Selected) {
+                if (switch8.isChecked()) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
                     imageView_jia.setClickable(true);
@@ -1301,7 +1288,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                     imageView_jian.setClickable(false);
                     imageView_jia.setClickable(false);
                 }
-                if (switch7Selected)
+                if (switch9.isChecked())
                     right_three_layout.setBackgroundResource(R.color.white);
                 else
                     right_three_layout.setBackgroundResource(R.color.gray);
@@ -1310,46 +1297,46 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 circle_seekBar.setCurProcess(selectedValue.get(4));
                 break;
             case 5:
-                if (switch2Selected)
+                if (switch4.isChecked())
                     left_one_layout.setBackgroundResource(R.color.white);
                 else
                     left_one_layout.setBackgroundResource(R.color.gray);
                 left_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_gray));
 
-                if (switch3Selected)
+                if (switch5.isChecked())
                     right_one_layout.setBackgroundResource(R.color.white);
                 else
                     right_one_layout.setBackgroundResource(R.color.gray);
                 right_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch4Selected)
+                if (switch6.isChecked())
                     left_two_layout.setBackgroundResource(R.color.white);
                 else
                     left_two_layout.setBackgroundResource(R.color.gray);
                 left_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch5Selected)
+                if (switch7.isChecked())
                     right_two_layout.setBackgroundResource(R.color.white);
                 else
                     right_two_layout.setBackgroundResource(R.color.gray);
                 right_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch6Selected)
+                if (switch8.isChecked())
                     left_three_layout.setBackgroundResource(R.color.white);
                 else
                     left_three_layout.setBackgroundResource(R.color.gray);
                 left_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
-                if (switch7Selected)
+                if (switch9.isChecked())
                     right_three_layout.setBackgroundResource(R.color.top_color);
                 else
                     right_three_layout.setBackgroundResource(R.color.gray);
-                if (switch7Selected) {
+                if (switch9.isChecked()) {
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
                     imageView_jia.setClickable(true);
@@ -1455,20 +1442,30 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
     @SuppressLint("SetTextI18n")
     protected void updateUI() {
         changeMachine();
-
+        switch11.setChecked(switch1Selected);//总开关状态
         switch (type) {
             case 0:
                 selectedValue.set(0, Temp_Left1);
-                switch1.setChecked(switch2Selected);
-                switch10.setChecked(switch8Selected);
+                if (switch1Selected) {
+                    switch1.setChecked(switch2Selected);
+                    switch10.setChecked(switch8Selected);
+                } else {
+                    switch1.setChecked(false);
+                    switch10.setChecked(false);
+                }
                 break;
             case 1:
                 selectedValue.set(0, Temp_Left1);
                 left_double_textView.setText(Temp_Left1 + "℃");
                 selectedValue.set(1, Temp_Right1);
                 right_double_textView.setText(Temp_Right1 + "℃");
-                switch2.setChecked(switch2Selected);
-                switch3.setChecked(switch3Selected);
+                if (switch1Selected) {
+                    switch2.setChecked(switch2Selected);
+                    switch3.setChecked(switch3Selected);
+                } else {
+                    switch2.setChecked(false);
+                    switch3.setChecked(false);
+                }
                 break;
             case 2:
                 selectedValue.set(0, Temp_Left1);
@@ -1483,12 +1480,22 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 left_three_textView.setText(Temp_Left3 + "℃");
                 selectedValue.set(5, Temp_Right3);
                 right_three_textView.setText(Temp_Right3 + "℃");
-                switch4.setChecked(switch2Selected);
-                switch5.setChecked(switch3Selected);
-                switch6.setChecked(switch4Selected);
-                switch7.setChecked(switch5Selected);
-                switch8.setChecked(switch6Selected);
-                switch9.setChecked(switch7Selected);
+                if (switch1Selected) {
+                    switch4.setChecked(switch2Selected);
+                    switch5.setChecked(switch3Selected);
+                    switch6.setChecked(switch4Selected);
+                    switch7.setChecked(switch5Selected);
+                    switch8.setChecked(switch6Selected);
+                    switch9.setChecked(switch7Selected);
+                } else {
+                    switch4.setChecked(false);
+                    switch5.setChecked(false);
+                    switch6.setChecked(false);
+                    switch7.setChecked(false);
+                    switch8.setChecked(false);
+                    switch9.setChecked(false);
+                }
+
         }
         upSelectedValue();
         nice_spinner.setSelectedIndex(mode);
@@ -1522,8 +1529,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 textView_qualified_time.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
                 break;
         }
-        isFirst = !switch1Selected;
-        initAnimation();
+
         getWeek(Week);
         waringLayout();
     }
@@ -1552,13 +1558,40 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
         waringImage.post(new Runnable() {
             @Override
             public void run() {
-                MyGizWifiDevice myGizWifiDevice=new MyGizWifiDevice();
+                MyGizWifiDevice myGizWifiDevice = new MyGizWifiDevice();
                 myGizWifiDevice.setWaring(Waring);
                 myGizWifiDevice.setOpen(switch1Selected);
                 myGizWifiDevice.setGizWifiDevice(mDevice);
                 EventBus.getDefault().post(new MessageEvent("刷新", myGizWifiDevice));
             }
         });
+    }
+
+    //总开关
+    private void closeAllSwitch(boolean check) {
+        if (!check) {
+            switch1.setChecked(false);
+            switch2.setChecked(false);
+            switch3.setChecked(false);
+            switch4.setChecked(false);
+            switch5.setChecked(false);
+            switch6.setChecked(false);
+            switch7.setChecked(false);
+            switch8.setChecked(false);
+            switch9.setChecked(false);
+            switch10.setChecked(false);
+        } else {
+            switch1.setChecked(switch2Selected);
+            switch2.setChecked(switch2Selected);
+            switch3.setChecked(switch5Selected);
+            switch4.setChecked(switch2Selected);
+            switch5.setChecked(switch5Selected);
+            switch6.setChecked(switch3Selected);
+            switch7.setChecked(switch6Selected);
+            switch8.setChecked(switch4Selected);
+            switch9.setChecked(switch7Selected);
+            switch10.setChecked(switch8Selected);
+        }
     }
 
     /**
@@ -1594,14 +1627,20 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
 
         int sn = 5;
         ConcurrentHashMap<String, Object> hashMap = new ConcurrentHashMap<String, Object>();
+        hashMap.put(KEY_DATA14, switch11.isChecked());//总开关
         switch (type) {
             case 0:
                 hashMap.put(KEY_DATA, selectedValue.get(0));
+                hashMap.put(KEY_DATA15, switch1.isChecked());//单开关
+                switch2Selected= switch1.isChecked();
                 break;
             case 1:
                 hashMap.put(KEY_DATA, selectedValue.get(0));
                 hashMap.put(KEY_DATA3, selectedValue.get(1));
-
+                hashMap.put(KEY_DATA15, switch2.isChecked());//左上温区开关
+                hashMap.put(KEY_DATA18, switch3.isChecked());//右上温区开关
+                switch2Selected= switch2.isChecked();
+                switch5Selected= switch3.isChecked();
                 break;
             case 2:
                 hashMap.put(KEY_DATA, selectedValue.get(0));
@@ -1610,11 +1649,25 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity
                 hashMap.put(KEY_DATA3, selectedValue.get(3));
                 hashMap.put(KEY_DATA4, selectedValue.get(4));
                 hashMap.put(KEY_DATA5, selectedValue.get(5));
+                hashMap.put(KEY_DATA15, switch4.isChecked());//左上温区开关
+                hashMap.put(KEY_DATA16, switch6.isChecked());//左中温区开关
+                hashMap.put(KEY_DATA17, switch8.isChecked());//左下温区开关
+                hashMap.put(KEY_DATA18, switch5.isChecked());//右上温区开关
+                hashMap.put(KEY_DATA19, switch7.isChecked());//右中温区开关
+                hashMap.put(KEY_DATA20, switch9.isChecked());//右下温区开关
+                switch2Selected= switch4.isChecked();
+                switch3Selected= switch6.isChecked();
+                switch4Selected= switch8.isChecked();
+                switch5Selected= switch5.isChecked();
+                switch6Selected= switch7.isChecked();
+                switch7Selected= switch9.isChecked();
+
                 break;
         }
         switch (optionType) {
             case 0:
-
+                hashMap.put(KEY_DATA21, switch10.isChecked());//一键杀菌
+                switch8Selected= switch10.isChecked();
                 break;
             case 1:
                 hashMap.put(KEY_DATA6, starHour);

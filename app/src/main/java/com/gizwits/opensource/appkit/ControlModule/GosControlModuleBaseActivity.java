@@ -114,21 +114,39 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
                 switch (dataKey) {
                     case KEY_DATA:
                         Temp_Left1 = (Integer) map.get(dataKey);
+                        if (Temp_Left1 > 60) {
+                            Temp_Left1 = 60;
+                        }
                         break;
                     case KEY_DATA1:
                         Temp_Left2 = (Integer) map.get(dataKey);
+                        if (Temp_Left2 > 60) {
+                            Temp_Left2 = 60;
+                        }
                         break;
                     case KEY_DATA2:
                         Temp_Left3 = (Integer) map.get(dataKey);
+                        if (Temp_Left3 > 60) {
+                            Temp_Left3 = 60;
+                        }
                         break;
                     case KEY_DATA3:
                         Temp_Right1 = (Integer) map.get(dataKey);
+                        if (Temp_Right1 > 60) {
+                            Temp_Right1 = 60;
+                        }
                         break;
                     case KEY_DATA4:
                         Temp_Right2 = (Integer) map.get(dataKey);
+                        if (Temp_Right2 > 60) {
+                            Temp_Right2 = 60;
+                        }
                         break;
                     case KEY_DATA5:
                         Temp_Right3 = (Integer) map.get(dataKey);
+                        if (Temp_Right3 > 60) {
+                            Temp_Right3 = 60;
+                        }
                         break;
                     case KEY_DATA6:
                         StartTimeHour = (Integer) map.get(dataKey);

@@ -241,6 +241,11 @@
                                 android:textSize="14dp" />
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/white" />
+
                         <LinearLayout
                             android:id="@+id/right_double_layout"
                             android:layout_width="0dp"
@@ -360,6 +365,11 @@
                                     android:textSize="14dp" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/white" />
+
                             <LinearLayout
                                 android:id="@+id/right_one_layout"
                                 android:layout_width="0dp"
@@ -414,6 +424,11 @@
                             </LinearLayout>
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="109dp"
@@ -466,6 +481,11 @@
                                     android:textSize="14dp" />
                             </LinearLayout>
 
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/white" />
+
                             <LinearLayout
                                 android:id="@+id/right_two_layout"
                                 android:layout_width="0dp"
@@ -509,6 +529,11 @@
                                     android:textSize="14dp" />
                             </LinearLayout>
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/white" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -560,6 +585,11 @@
                                     android:textColor="@color/text_grey"
                                     android:textSize="14dp" />
                             </LinearLayout>
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/white" />
 
                             <LinearLayout
                                 android:id="@+id/right_three_layout"
@@ -814,7 +844,7 @@
                         android:layout_width="145dp"
                         android:layout_height="145dp"
                         android:layout_centerInParent="true"
-                        app:wheel_max_process="40" />
+                        app:wheel_max_process="40"/>
 
                     <TextView
                         android:id="@+id/textView_num"

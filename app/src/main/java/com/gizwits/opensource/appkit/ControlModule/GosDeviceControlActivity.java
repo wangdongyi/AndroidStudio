@@ -447,14 +447,14 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             @Override
             public void onClick(View v) {
                 if (circle_seekBar.getCurProcess() > 0)
-                    circle_seekBar.setCurProcess(circle_seekBar.getCurProcess() - 1);
+                    circle_seekBar.setCurProcess(circle_seekBar.getCurProcess()-20 - 1);
             }
         });
         imageView_jia.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (circle_seekBar.getCurProcess() < 60)
-                    circle_seekBar.setCurProcess(circle_seekBar.getCurProcess() + 1);
+                    circle_seekBar.setCurProcess(circle_seekBar.getCurProcess()-20 + 1);
             }
         });
         start_time_layout.setOnClickListener(new NoDoubleClickListener() {
@@ -846,7 +846,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             @Override
             public void onChanged(CircleSeekBar seekbar, int curValue) {
                 setSelectedNum(curValue+20);
-
             }
         });
     }
@@ -1086,7 +1085,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(0));
+                circle_seekBar.setCurProcess(selectedValue.get(0)-20);
                 break;
             case 1:
                 if (switch4.isChecked())
@@ -1138,7 +1137,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(1));
+                circle_seekBar.setCurProcess(selectedValue.get(1)-20);
                 break;
             case 2:
                 if (switch4.isChecked())
@@ -1190,7 +1189,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(2));
+                circle_seekBar.setCurProcess(selectedValue.get(2)-20);
                 break;
             case 3:
                 if (switch4.isChecked())
@@ -1242,7 +1241,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(3));
+                circle_seekBar.setCurProcess(selectedValue.get(3)-20);
                 break;
             case 4:
                 if (switch4.isChecked())
@@ -1294,7 +1293,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(4));
+                circle_seekBar.setCurProcess(selectedValue.get(4)-20);
                 break;
             case 5:
                 if (switch4.isChecked())
@@ -1347,7 +1346,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 }
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                circle_seekBar.setCurProcess(selectedValue.get(5));
+                circle_seekBar.setCurProcess(selectedValue.get(5)-20);
                 break;
         }
     }

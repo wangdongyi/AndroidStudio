@@ -68,12 +68,13 @@ public class GosModeListActivity extends GosConfigModuleBaseActivity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 
-				GosAirlinkChooseDeviceWorkWiFiActivity.modeNum = arg2;
-				Intent intent = new Intent(GosModeListActivity.this, GosAirlinkReadyActivity.class);
-				startActivity(intent);
-				finish();
+
 			}
 		});
+		GosAirlinkChooseDeviceWorkWiFiActivity.modeNum = 0;
+		Intent intent = new Intent(GosModeListActivity.this, GosAirlinkReadyActivity.class);
+		startActivity(intent);
+		finish();
 	}
 
 	private void initData() {

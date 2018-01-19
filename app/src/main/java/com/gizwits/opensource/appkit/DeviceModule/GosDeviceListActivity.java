@@ -589,7 +589,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
             spf.edit().putString("Uid", this.uid).commit();
             spf.edit().putString("Token", this.token).commit();
             handler.sendEmptyMessage(GETLIST);
-            // TODO 绑定推送
+            //  绑定推送
             GosPushManager.pushBindService(token);
         } else {
             loginStatus = 0;

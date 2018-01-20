@@ -447,14 +447,14 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             @Override
             public void onClick(View v) {
                 if (circle_seekBar.getCurProcess() > 0)
-                    circle_seekBar.setCurProcess(circle_seekBar.getCurProcess()-20 - 1);
+                    circle_seekBar.setCurProcess(circle_seekBar.getCurProcess() - 1);
             }
         });
         imageView_jia.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (circle_seekBar.getCurProcess() < 60)
-                    circle_seekBar.setCurProcess(circle_seekBar.getCurProcess()-20 + 1);
+                if (circle_seekBar.getCurProcess() < 40)
+                    circle_seekBar.setCurProcess(circle_seekBar.getCurProcess() + 1);
             }
         });
         start_time_layout.setOnClickListener(new NoDoubleClickListener() {
@@ -516,7 +516,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 right_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
 
-                circle_seekBar.setCurProcess(selectedValue.get(0)-20);
+                circle_seekBar.setCurProcess(selectedValue.get(0) - 20);
                 if (switch2.isChecked()) {
                     left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
                     circle_seekBar.setEnabled(true);
@@ -539,7 +539,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             @Override
             public void onClick(View v) {
                 selectedPosition = 1;
-                circle_seekBar.setCurProcess(selectedValue.get(1)-20);
+                circle_seekBar.setCurProcess(selectedValue.get(1) - 20);
                 right_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 left_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
@@ -801,18 +801,21 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                         //手动
                         optionType = 0;
                         textView_keller.setVisibility(View.VISIBLE);
+                        switch10.setVisibility(View.VISIBLE);
                         layout_automatic.setVisibility(View.GONE);
                         main_qualified_layout.setVisibility(View.GONE);
                         break;
                     case 1:
                         optionType = 1;
-                        textView_keller.setVisibility(View.GONE);
+                        textView_keller.setVisibility(View.INVISIBLE);
+                        switch10.setVisibility(View.INVISIBLE);
                         layout_automatic.setVisibility(View.VISIBLE);
                         main_qualified_layout.setVisibility(View.GONE);
                         break;
                     case 2:
                         optionType = 2;
-                        textView_keller.setVisibility(View.GONE);
+                        textView_keller.setVisibility(View.INVISIBLE);
+                        switch10.setVisibility(View.INVISIBLE);
                         layout_automatic.setVisibility(View.GONE);
                         main_qualified_layout.setVisibility(View.VISIBLE);
                         break;
@@ -845,7 +848,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
         circle_seekBar.setOnSeekBarChangeListener(new CircleSeekBar.OnSeekBarChangeListener() {
             @Override
             public void onChanged(CircleSeekBar seekbar, int curValue) {
-                setSelectedNum(curValue+20);
+                setSelectedNum(curValue + 20);
             }
         });
     }
@@ -853,7 +856,10 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     //显示选中数字
     @SuppressLint("SetTextI18n")
     private void setSelectedNum(int value) {
-        textView_num.setText(value + "");
+        if (value >= 20)
+            textView_num.setText(value + "");
+        else
+            textView_num.setText(20 + "");
         switch (type) {
             case 0:
                 selectedValue.set(0, value);
@@ -927,22 +933,22 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     private void upSelectedValue() {
         switch (type) {
             case 0://单温区
-                circle_seekBar.setCurProcess(Temp_Left1-20);
+                circle_seekBar.setCurProcess(Temp_Left1 - 20);
                 break;
             case 1://双温区
                 switch (selectedPosition) {
                     case 0://左温区
-                        circle_seekBar.setCurProcess(Temp_Left1-20);
+                        circle_seekBar.setCurProcess(Temp_Left1 - 20);
                         break;
                     case 1:
-                        circle_seekBar.setCurProcess(Temp_Right1-20);
+                        circle_seekBar.setCurProcess(Temp_Right1 - 20);
                         break;
                 }
                 break;
             case 2:
                 switch (selectedPosition) {
                     case 0:
-                        circle_seekBar.setCurProcess(Temp_Left1-20);
+                        circle_seekBar.setCurProcess(Temp_Left1 - 20);
                         if (switch2Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -954,7 +960,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                         }
                         break;
                     case 1:
-                        circle_seekBar.setCurProcess(Temp_Right1-20);
+                        circle_seekBar.setCurProcess(Temp_Right1 - 20);
                         if (switch3Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -966,7 +972,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                         }
                         break;
                     case 2:
-                        circle_seekBar.setCurProcess(Temp_Left2-20);
+                        circle_seekBar.setCurProcess(Temp_Left2 - 20);
                         if (switch4Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -978,7 +984,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                         }
                         break;
                     case 3:
-                        circle_seekBar.setCurProcess(Temp_Right2-20);
+                        circle_seekBar.setCurProcess(Temp_Right2 - 20);
                         if (switch5Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -990,7 +996,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                         }
                         break;
                     case 4:
-                        circle_seekBar.setCurProcess(Temp_Left3-20);
+                        circle_seekBar.setCurProcess(Temp_Left3 - 20);
                         if (switch6Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -1002,7 +1008,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                         }
                         break;
                     case 5:
-                        circle_seekBar.setCurProcess(Temp_Right3-20);
+                        circle_seekBar.setCurProcess(Temp_Right3 - 20);
                         if (switch7Selected) {
                             circle_seekBar.setEnabled(true);
                             imageView_jian.setClickable(true);
@@ -1085,7 +1091,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(0)-20);
+                circle_seekBar.setCurProcess(selectedValue.get(0) - 20);
                 break;
             case 1:
                 if (switch4.isChecked())
@@ -1137,7 +1143,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(1)-20);
+                circle_seekBar.setCurProcess(selectedValue.get(1) - 20);
                 break;
             case 2:
                 if (switch4.isChecked())
@@ -1189,7 +1195,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(2)-20);
+                circle_seekBar.setCurProcess(selectedValue.get(2) - 20);
                 break;
             case 3:
                 if (switch4.isChecked())
@@ -1241,7 +1247,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(3)-20);
+                circle_seekBar.setCurProcess(selectedValue.get(3) - 20);
                 break;
             case 4:
                 if (switch4.isChecked())
@@ -1293,7 +1299,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(4)-20);
+                circle_seekBar.setCurProcess(selectedValue.get(4) - 20);
                 break;
             case 5:
                 if (switch4.isChecked())
@@ -1346,7 +1352,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 }
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                circle_seekBar.setCurProcess(selectedValue.get(5)-20);
+                circle_seekBar.setCurProcess(selectedValue.get(5) - 20);
                 break;
         }
     }
@@ -1441,7 +1447,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     @SuppressLint("SetTextI18n")
     protected void updateUI() {
         changeMachine();
-        NotificationUtil.getInstance(GosDeviceControlActivity.this).sendNotification(this,Waring);
+        NotificationUtil.getInstance(GosDeviceControlActivity.this).sendNotification(this, Waring);
         switch11.setChecked(switch1Selected);//总开关状态
         switch (type) {
             case 0:
@@ -1461,7 +1467,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 right_double_textView.setText(Temp_Right1 + "℃");
                 if (switch1Selected) {
                     switch2.setChecked(switch2Selected);
-                    switch3.setChecked(switch3Selected);
+                    switch3.setChecked(switch5Selected);
                 } else {
                     switch2.setChecked(false);
                     switch3.setChecked(false);
@@ -1632,15 +1638,15 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             case 0:
                 hashMap.put(KEY_DATA, selectedValue.get(0));
                 hashMap.put(KEY_DATA15, switch1.isChecked());//单开关
-                switch2Selected= switch1.isChecked();
+                switch2Selected = switch1.isChecked();
                 break;
             case 1:
                 hashMap.put(KEY_DATA, selectedValue.get(0));
                 hashMap.put(KEY_DATA3, selectedValue.get(1));
                 hashMap.put(KEY_DATA15, switch2.isChecked());//左上温区开关
                 hashMap.put(KEY_DATA18, switch3.isChecked());//右上温区开关
-                switch2Selected= switch2.isChecked();
-                switch5Selected= switch3.isChecked();
+                switch2Selected = switch2.isChecked();
+                switch5Selected = switch3.isChecked();
                 break;
             case 2:
                 hashMap.put(KEY_DATA, selectedValue.get(0));
@@ -1655,19 +1661,19 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 hashMap.put(KEY_DATA18, switch5.isChecked());//右上温区开关
                 hashMap.put(KEY_DATA19, switch7.isChecked());//右中温区开关
                 hashMap.put(KEY_DATA20, switch9.isChecked());//右下温区开关
-                switch2Selected= switch4.isChecked();
-                switch3Selected= switch6.isChecked();
-                switch4Selected= switch8.isChecked();
-                switch5Selected= switch5.isChecked();
-                switch6Selected= switch7.isChecked();
-                switch7Selected= switch9.isChecked();
+                switch2Selected = switch4.isChecked();
+                switch3Selected = switch6.isChecked();
+                switch4Selected = switch8.isChecked();
+                switch5Selected = switch5.isChecked();
+                switch6Selected = switch7.isChecked();
+                switch7Selected = switch9.isChecked();
 
                 break;
         }
         switch (optionType) {
             case 0:
                 hashMap.put(KEY_DATA21, switch10.isChecked());//一键杀菌
-                switch8Selected= switch10.isChecked();
+                switch8Selected = switch10.isChecked();
                 break;
             case 1:
                 hashMap.put(KEY_DATA6, starHour);

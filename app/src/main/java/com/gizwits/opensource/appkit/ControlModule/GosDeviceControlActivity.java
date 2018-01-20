@@ -206,6 +206,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
         initDevice();
         setActionBar(true, true, getDeviceName());
         initView();
+        getStatusOfDevice();
         initDate();
         initEvent();
     }
@@ -1366,7 +1367,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     @Override
     public void onResume() {
         super.onResume();
-        getStatusOfDevice();
+
     }
 
     @Override
@@ -1705,29 +1706,32 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     }
 
     private int getWeek() {
-        int week = 0x00000000;
+        long week = 0;
         if (selected1) {
-            week = week + 0x00000001;
+            week = week + 1;
         }
         if (selected2) {
-            week = week + 0x00000010;
+            week = week + 10;
         }
         if (selected3) {
-            week = week + 0x00000100;
+            week = week + 100;
         }
         if (selected4) {
-            week = week + 0x00001000;
+            week = week + 1000;
         }
         if (selected5) {
-            week = week + 0x00010000;
+            week = week + 10000;
         }
         if (selected6) {
-            week = week + 0x00100000;
+            week = week + 100000;
         }
         if (selected7) {
-            week = week + 0x01000000;
+            week = week + 1000000;
         }
-        return week;
+        int back=0;
+        String binaryString = week + "";
+        back = Integer.parseInt(binaryString, 2);
+        return back;
     }
 
     private void getWeek(int week) {

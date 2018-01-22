@@ -41,6 +41,7 @@ public class SharedDeviceListAcitivity extends GosBaseActivity {
     private String token;
     private AppCompatImageView imageView_back;
     private TextView textView_title;
+    private AppCompatImageView imageView_right;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class SharedDeviceListAcitivity extends GosBaseActivity {
         setContentView(R.layout.activity_gos_shared_device_list);
 
         setActionBar(true, true, R.string.sharedlist);
-        StatusBarUtil.setStatusBarDark(getWindow(),false);
+        StatusBarUtil.setStatusBarDark(getWindow(), false);
         initData();
         initView();
     }
@@ -128,6 +129,15 @@ public class SharedDeviceListAcitivity extends GosBaseActivity {
         });
         textView_title = (TextView) findViewById(R.id.textView_title);
         textView_title.setText("设备分享");
+        imageView_right = (AppCompatImageView) findViewById(R.id.imageView_right);
+        imageView_right.setVisibility(View.VISIBLE);
+        imageView_right.setBackgroundResource(R.drawable.ic_add_black);
+        imageView_right.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            protected void onNoDoubleClick(View v) {
+
+            }
+        });
     }
 
     class myFragmentAdapter extends FragmentStatePagerAdapter {

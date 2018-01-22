@@ -47,6 +47,8 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
     protected static final String KEY_DATA20 = "switch7";
     protected static final String KEY_DATA21 = "switch8";
     protected static final String KEY_DATA22 = "mode";
+    protected static final String KEY_DATA23 = "reservation1";
+    protected static final String KEY_DATA24 = "reservation2";
 
 	/*
      * ===========================================================
@@ -89,6 +91,8 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
     protected static boolean switch7Selected;
     protected static boolean switch8Selected;
     protected static int mode;
+    protected static int Hour_double;
+    protected static int Minutes_double;
     /*
      * ===========================================================
      * 以下key值对应设备硬件信息各明细的名称，用与回调中提取硬件信息字段。
@@ -167,7 +171,7 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
                         TimeMin = (Integer) map.get(dataKey);
                         break;
                     case KEY_DATA12:
-                        TimeMin = (Integer) map.get(dataKey);
+                        Week = (Integer) map.get(dataKey);
                         break;
                     case KEY_DATA13:
                         Waring = (Integer) map.get(dataKey);
@@ -198,6 +202,12 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
                         break;
                     case KEY_DATA22:
                         mode = (Integer) map.get(dataKey);
+                        break;
+                    case KEY_DATA23:
+                        Hour_double = (Integer) map.get(dataKey);
+                        break;
+                    case KEY_DATA24:
+                        Minutes_double = (Integer) map.get(dataKey);
                         break;
 
                 }

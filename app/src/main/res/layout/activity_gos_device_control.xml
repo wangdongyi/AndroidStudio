@@ -51,14 +51,17 @@
                     android:thumb="@drawable/my_thumb"
                     android:track="@drawable/switch_setting_selector" />
 
-                <org.angmarch.views.NiceSpinner
+                <Spinner
                     android:id="@+id/nice_spinner"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_centerHorizontal="true"
-                    app:arrowDrawable="@mipmap/arrow_down"
-                    app:backgroundSelector="@color/top_color"
-                    app:textTint="@color/white" />
+                    android:background="@color/top_color"
+                    android:entries="@array/modeType"
+                    android:gravity="center"
+                    android:popupBackground="@drawable/round_rect"
+                    android:spinnerMode="dropdown"
+                    android:textSize="17.0dp" />
 
 
                 <TextView
@@ -183,121 +186,7 @@
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/main_double_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <LinearLayout
-                            android:id="@+id/left_double_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@color/top_color"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <Switch
-                                    android:id="@+id/switch2"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="47dp"
-                                    android:checked="true"
-                                    android:scaleX="0.5"
-                                    android:scaleY="0.5"
-                                    android:textColor="@color/text_black"
-                                    android:textOff=""
-                                    android:textOn=""
-                                    android:thumb="@drawable/my_thumb"
-                                    android:track="@drawable/switch_setting_selector" />
-
-                                <TextView
-                                    android:id="@+id/left_double_textView"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="77dp"
-                                    android:text="0℃"
-                                    android:textColor="@color/white"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold" />
-                            </RelativeLayout>
-
-
-                            <TextView
-                                android:id="@+id/left_double_hint"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="15dp"
-                                android:layout_marginTop="5dp"
-                                android:text="左温区"
-                                android:textColor="@color/white"
-                                android:textSize="14dp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="match_parent"
-                            android:background="@color/white" />
-
-                        <LinearLayout
-                            android:id="@+id/right_double_layout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@color/white"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-
-                                <Switch
-                                    android:id="@+id/switch3"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginTop="47dp"
-                                    android:checked="true"
-                                    android:scaleX="0.5"
-                                    android:scaleY="0.5"
-                                    android:textColor="@color/text_black"
-                                    android:textOff=""
-                                    android:textOn=""
-                                    android:thumb="@drawable/my_thumb"
-                                    android:track="@drawable/switch_setting_selector" />
-
-                                <TextView
-                                    android:id="@+id/right_double_textView"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:layout_marginTop="77dp"
-                                    android:text="0℃"
-                                    android:textColor="@color/text_black"
-                                    android:textSize="24sp"
-                                    android:textStyle="bold" />
-                            </RelativeLayout>
-
-                            <TextView
-                                android:id="@+id/right_double_hint"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="15dp"
-                                android:layout_marginTop="5dp"
-                                android:text="右温区"
-                                android:textColor="@color/text_grey"
-                                android:textSize="14dp" />
-                        </LinearLayout>
-                    </LinearLayout>
+                    <include layout="@layout/layout_two" />
 
                     <LinearLayout
                         android:id="@+id/main_six_layout"
@@ -305,7 +194,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/line"
                         android:orientation="vertical"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -844,7 +733,7 @@
                         android:layout_width="145dp"
                         android:layout_height="145dp"
                         android:layout_centerInParent="true"
-                        app:wheel_max_process="40"/>
+                        app:wheel_max_process="40" />
 
                     <TextView
                         android:id="@+id/textView_num"

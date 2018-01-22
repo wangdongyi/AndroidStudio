@@ -589,12 +589,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 }
             }
         });
-        circle_seekBar.setOnSeekBarChangeListener(new CircleSeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onChanged(CircleSeekBar seekbar, int curValue) {
 
-            }
-        });
         left_one_layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -819,7 +814,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
 
     //下选框
     private void initSpinner() {
-        ArrayAdapter< String> adapter = new ArrayAdapter< String>( this,R.layout.spinner_parent);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.spinner_parent);
 
         adapter.add("手动");
 
@@ -1742,88 +1737,107 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
 
         int sn = 5;
         ConcurrentHashMap<String, Object> hashMap = new ConcurrentHashMap<String, Object>();
-        hashMap.put(KEY_DATA14, switch11.isChecked());//总开关
-        switch (type) {
-            case 0:
-                hashMap.put(KEY_DATA, selectedValue.get(0));
-                hashMap.put(KEY_DATA15, switch1.isChecked());//单开关
-                switch2Selected = switch1.isChecked();
-                break;
-            case 1:
-                hashMap.put(KEY_DATA, selectedValue.get(0));
-                hashMap.put(KEY_DATA3, selectedValue.get(1));
-                hashMap.put(KEY_DATA15, switch2.isChecked());//左上温区开关
-                hashMap.put(KEY_DATA18, switch3.isChecked());//右上温区开关
-                switch2Selected = switch2.isChecked();
-                switch5Selected = switch3.isChecked();
-                break;
-            case 2:
-                hashMap.put(KEY_DATA, selectedValue.get(0));
-                hashMap.put(KEY_DATA1, selectedValue.get(1));
-                hashMap.put(KEY_DATA2, selectedValue.get(2));
-                hashMap.put(KEY_DATA3, selectedValue.get(3));
-                hashMap.put(KEY_DATA4, selectedValue.get(4));
-                hashMap.put(KEY_DATA5, selectedValue.get(5));
-                hashMap.put(KEY_DATA15, switch4.isChecked());//左上温区开关
-                hashMap.put(KEY_DATA16, switch6.isChecked());//左中温区开关
-                hashMap.put(KEY_DATA17, switch8.isChecked());//左下温区开关
-                hashMap.put(KEY_DATA18, switch5.isChecked());//右上温区开关
-                hashMap.put(KEY_DATA19, switch7.isChecked());//右中温区开关
-                hashMap.put(KEY_DATA20, switch9.isChecked());//右下温区开关
-                switch2Selected = switch4.isChecked();
-                switch3Selected = switch6.isChecked();
-                switch4Selected = switch8.isChecked();
-                switch5Selected = switch5.isChecked();
-                switch6Selected = switch7.isChecked();
-                switch7Selected = switch9.isChecked();
+        hashMap.put(KEY_DATA14, switch11.isChecked());//总开关。关闭的时候其它字段都不提交
+        if (switch11.isChecked()) {
+            switch (type) {
+                case 0:
+                    hashMap.put(KEY_DATA15, switch1.isChecked());//单开关
+                    switch2Selected = switch1.isChecked();
+                    if (switch1.isChecked() && selectedValue.get(0) != Temp_Left1) {
+                        //温度不同时才上传
+                        hashMap.put(KEY_DATA, selectedValue.get(0));
+                    }
+                    break;
+                case 1:
+                    hashMap.put(KEY_DATA15, switch2.isChecked());//左上温区开关
+                    if (switch2.isChecked() && selectedValue.get(0) != Temp_Left1) {
+                        hashMap.put(KEY_DATA, selectedValue.get(0));
 
-                break;
-        }
-        switch (optionType) {
-            case 0:
-                hashMap.put(KEY_DATA21, switch10.isChecked());//一键杀菌
-                switch8Selected = switch10.isChecked();
-                break;
-            case 1:
-                if (starHour + starMinute + endHour + endMinute == 0) {
-                    myToast("时间不能为空");
-                    return;
-                }
-                hashMap.put(KEY_DATA6, starHour);
-                hashMap.put(KEY_DATA7, starMinute);
-                hashMap.put(KEY_DATA8, endHour);
-                hashMap.put(KEY_DATA9, endMinute);
-                hashMap.put(KEY_DATA12, getWeek());
-                break;
-            case 2:
-                if (type == 1) {
-                    if (timingHour + timingMinute == 0) {
-                        myToast("定不能为空");
-                        return;
                     }
-                    if (Hour_double + Minutes_double == 0) {
-                        myToast("定不能为空");
-                        return;
-                    }
-                    hashMap.put(KEY_DATA10, timingHour);
-                    hashMap.put(KEY_DATA11, timingMinute);
-                    hashMap.put(KEY_DATA23, Hour_double);
-                    hashMap.put(KEY_DATA24, Minutes_double);
-                } else {
-                    if (timingHour + timingMinute == 0) {
-                        myToast("定不能为空");
-                        return;
-                    }
-                    hashMap.put(KEY_DATA10, timingHour);
-                    hashMap.put(KEY_DATA11, timingMinute);
-                }
+                    hashMap.put(KEY_DATA18, switch3.isChecked());//右上温区开关
+                    if (switch3.isChecked() && selectedValue.get(1) != Temp_Right1) {
+                        hashMap.put(KEY_DATA3, selectedValue.get(1));
 
-                break;
+                    }
+                    switch2Selected = switch2.isChecked();
+                    switch5Selected = switch3.isChecked();
+                    break;
+                case 2:
+                    hashMap.put(KEY_DATA15, switch4.isChecked());//左上温区开关
+                    if (switch4.isChecked() && selectedValue.get(0) != Temp_Left1) {
+                        hashMap.put(KEY_DATA, selectedValue.get(0));
+                    }
+                    hashMap.put(KEY_DATA16, switch6.isChecked());//左中温区开关
+                    if (switch6.isChecked() && selectedValue.get(1) != Temp_Left2) {
+                        hashMap.put(KEY_DATA1, selectedValue.get(1));
+                    }
+                    hashMap.put(KEY_DATA17, switch8.isChecked());//左下温区开关
+                    if (switch8.isChecked() && selectedValue.get(2) != Temp_Left3) {
+                        hashMap.put(KEY_DATA2, selectedValue.get(2));
+                    }
+                    hashMap.put(KEY_DATA18, switch5.isChecked());//右上温区开关
+                    if (switch5.isChecked() && selectedValue.get(3) != Temp_Right1) {
+                        hashMap.put(KEY_DATA3, selectedValue.get(3));
+                    }
+                    hashMap.put(KEY_DATA19, switch7.isChecked());//右中温区开关
+                    if (switch7.isChecked() && selectedValue.get(4) != Temp_Right2) {
+                        hashMap.put(KEY_DATA4, selectedValue.get(4));
+                    }
+                    hashMap.put(KEY_DATA20, switch9.isChecked());//右下温区开关
+                    if (switch9.isChecked() && selectedValue.get(5) != Temp_Right3) {
+                        hashMap.put(KEY_DATA5, selectedValue.get(5));
+                    }
+                    switch2Selected = switch4.isChecked();
+                    switch3Selected = switch6.isChecked();
+                    switch4Selected = switch8.isChecked();
+                    switch5Selected = switch5.isChecked();
+                    switch6Selected = switch7.isChecked();
+                    switch7Selected = switch9.isChecked();
+                    break;
+            }
+            switch (optionType) {
+                case 0:
+                    hashMap.put(KEY_DATA21, switch10.isChecked());//一键杀菌
+                    switch8Selected = switch10.isChecked();
+                    break;
+                case 1:
+                    if (starHour + starMinute + endHour + endMinute == 0) {
+                        myToast("时间不能为空");
+                        return;
+                    }
+                    hashMap.put(KEY_DATA6, starHour);
+                    hashMap.put(KEY_DATA7, starMinute);
+                    hashMap.put(KEY_DATA8, endHour);
+                    hashMap.put(KEY_DATA9, endMinute);
+                    hashMap.put(KEY_DATA12, getWeek());
+                    break;
+                case 2:
+                    if (type == 1) {
+                        if (timingHour + timingMinute == 0) {
+                            myToast("定不能为空");
+                            return;
+                        }
+                        if (Hour_double + Minutes_double == 0) {
+                            myToast("定不能为空");
+                            return;
+                        }
+                        hashMap.put(KEY_DATA10, timingHour);
+                        hashMap.put(KEY_DATA11, timingMinute);
+                        hashMap.put(KEY_DATA23, Hour_double);
+                        hashMap.put(KEY_DATA24, Minutes_double);
+                    } else {
+                        if (timingHour + timingMinute == 0) {
+                            myToast("定不能为空");
+                            return;
+                        }
+                        hashMap.put(KEY_DATA10, timingHour);
+                        hashMap.put(KEY_DATA11, timingMinute);
+                    }
+
+                    break;
+            }
+            hashMap.put(KEY_DATA22, optionType);
         }
-        hashMap.put(KEY_DATA22, optionType);
-        // 同时下发多个数据点需要一次性在map中放置全部需要控制的key，value值
-        // hashMap.put(key2, value2);
-        // hashMap.put(key3, value3);
         mDevice.write(hashMap, sn);
         Log.i("liang", "下发命令：" + hashMap.toString());
     }

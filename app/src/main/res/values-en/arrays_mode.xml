@@ -15,5 +15,9 @@
         <item>AtmelEE</item>
         <item>Other</item>
     </string-array>
-
+    <string-array name="modeType">
+        <item>手动</item>
+        <item>自动</item>
+        <item>定时</item>
+    </string-array>
 </resources>

@@ -10,6 +10,8 @@ import com.gizwits.gizwifisdk.listener.GizWifiDeviceListener;
 import com.gizwits.opensource.appkit.CommonModule.GosBaseActivity;
 import com.gizwits.opensource.appkit.utils.HexStrUtils;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.content.Context;
 import android.view.MenuItem;
@@ -379,5 +381,19 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
         }
         return Math.round(date) + "";
     }
-
+    //提示框
+    public void showAlertDialog(String msg, DialogInterface.OnClickListener listener) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage(msg)
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("确定",listener)
+                .create();
+        dialog.show();
+    }
 }

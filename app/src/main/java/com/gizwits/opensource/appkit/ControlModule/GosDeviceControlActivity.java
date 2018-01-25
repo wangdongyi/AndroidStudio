@@ -74,7 +74,7 @@ import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.s
 import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected6;
 import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected7;
 
-public class GosDeviceControlActivity extends GosControlModuleBaseActivity  {
+public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
 
     /**
      * 设备列表传入的设备变量
@@ -376,13 +376,20 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity  {
         imageView_right.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
+                isChange();
                 if (userDone) {
                     showAlertDialog("您有修改没有提交，是否提交？", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             userDone = false;
-                            isEdit = true;
+                            sendCommand();
+                        }
+                    }, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            isEdit = false;
                             initAnimation();
                         }
                     });
@@ -397,8 +404,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity  {
             protected void onNoDoubleClick(View v) {
                 isEdit = true;
                 initAnimation();
-
-
             }
         });
         imageView_jian.setOnClickListener(new OnClickListener() {
@@ -469,6 +474,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity  {
         repeatlayout.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
+                userDone = true;
                 Intent intent = new Intent(GosDeviceControlActivity.this, SelectedWeekActivity.class);
                 startActivity(intent);
             }
@@ -507,7 +513,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity  {
             @Override
             public void onClick(View v) {
                 selectedPosition = 0;
-
                 left_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 left_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
@@ -1476,6 +1481,46 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity  {
         }
     }
 
+    private void isChange() {
+        switch (type) {
+            case 0:
+                if (selectedValue.get(0) != Temp_Left1) {
+                    //温度不同时才上传
+                    userDone = true;
+                }
+                break;
+            case 1:
+                if (selectedValue.get(0) != Temp_Left1) {
+                    userDone = true;
+                }
+                if (selectedValue.get(1) != Temp_Right1) {
+                    userDone = true;
+                }
+                break;
+            case 2:
+                if (selectedValue.get(0) != Temp_Left1) {
+                    userDone = true;
+                }
+                if (selectedValue.get(1) != Temp_Left2) {
+                    userDone = true;
+                }
+                if (selectedValue.get(2) != Temp_Left3) {
+                    userDone = true;
+                }
+                if (selectedValue.get(3) != Temp_Right1) {
+                    userDone = true;
+                }
+                if (selectedValue.get(4) != Temp_Right2) {
+                    userDone = true;
+                }
+                if (selectedValue.get(5) != Temp_Right3) {
+                    userDone = true;
+                }
+                break;
+        }
+
+    }
+
     /**
      * 发送指令,下发单个数据点的命令可以用这个方法
      * <p>
@@ -1763,9 +1808,11 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity  {
                 mHandler.sendEmptyMessage(handler_key.UPDATE_UI.ordinal());
             } else {
                 myToast("提交成功");
+                userDone = false;
                 isEdit = false;
                 initAnimation();
                 getStatusOfDevice();
+
             }
         }
     }

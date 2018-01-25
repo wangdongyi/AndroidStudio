@@ -460,4 +460,15 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
                 .create();
         dialog.show();
     }
+
+    //提示框
+    public void showAlertDialog(String msg, DialogInterface.OnClickListener listener, DialogInterface.OnClickListener listenerC) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("提示")
+                .setMessage(msg)
+                .setNegativeButton("取消", listenerC)
+                .setPositiveButton("确定", listener)
+                .create();
+        dialog.show();
+    }
 }

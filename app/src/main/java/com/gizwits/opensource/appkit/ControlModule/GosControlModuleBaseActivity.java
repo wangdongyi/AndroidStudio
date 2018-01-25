@@ -1,6 +1,7 @@
 package com.gizwits.opensource.appkit.ControlModule;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.gizwits.gizwifisdk.api.GizWifiDevice;
@@ -107,7 +108,9 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
     protected static final String WIFI_FIRMWAREID_KEY = "wifiFirmwareId";
     protected static final String WIFI_FIRMWAREVER_KEY = "wifiFirmwareVer";
     protected static final String PRODUCT_KEY = "productKey";
-
+    protected BaseBean baseBean;
+    protected ArrayList<TemperatureBean> temperatureBeanArrayList = new ArrayList<>();
+    protected int type = 0;
     private Toast mToast;
 
     @SuppressWarnings("unchecked")
@@ -214,8 +217,9 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
 
                 }
             }
-        }
+            buildBase();
 
+        }
         StringBuilder sBuilder = new StringBuilder();
 
         // 已定义的设备报警数据点，设备发生报警后该字段有内容，没有发生报警则没内容
@@ -250,6 +254,73 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
         }
     }
 
+    private void buildBase() {
+        if (baseBean == null) {
+            baseBean = new BaseBean();
+            baseBean.setList(temperatureBeanArrayList);
+        }
+        baseBean.setAllSwitch(switch1Selected);
+        if (mode > 2) {
+            mode = 0;
+        }
+        baseBean.setType(mode);
+        switch (mode) {
+            case 0:
+                ManualBean manualBean = new ManualBean();
+                manualBean.setKillSwitch(switch8Selected);
+                baseBean.setManualBean(manualBean);
+                break;
+            case 1:
+                AutomaticBean automaticBean = new AutomaticBean();
+                automaticBean.setStarHour(StartTimeHour);
+                automaticBean.setStarMinute(StartTimeMin);
+                automaticBean.setEndHour(CloseTimeHour);
+                automaticBean.setEndMinute(CloseTimeMin);
+                automaticBean.setWeek(Week);
+                baseBean.setAutomaticBean(automaticBean);
+                break;
+            case 2:
+                TimingBean timingBean = new TimingBean();
+                timingBean.setHour(TimeHour);
+                timingBean.setMinute(TimeMin);
+                if (type == 1) {
+                    timingBean.setHourRight(Hour_double);
+                    timingBean.setMinuteRight(Minutes_double);
+                }
+                baseBean.setTimingBean(timingBean);
+                break;
+        }
+        temperatureBeanArrayList.clear();
+        if (Temp_Left2 + Temp_Left3 + Temp_Right1 + Temp_Right2 + Temp_Right3 == 0) {
+            type = 0;
+            buildTemperature(switch2Selected, Temp_Left1);
+        } else if (Temp_Left2 + Temp_Right2 + Temp_Left3 + Temp_Right3 == 0) {
+            type = 1;
+            buildTemperature(switch2Selected, Temp_Left1);
+            buildTemperature(switch5Selected, Temp_Right1);
+        } else {
+            type = 2;
+            buildTemperature(switch2Selected, Temp_Left1);
+            buildTemperature(switch3Selected, Temp_Left2);
+            buildTemperature(switch4Selected, Temp_Left3);
+            buildTemperature(switch5Selected, Temp_Right1);
+            buildTemperature(switch6Selected, Temp_Right1);
+            buildTemperature(switch7Selected, Temp_Right1);
+        }
+    }
+
+    private void buildTemperature(boolean selected, int temp) {
+        TemperatureBean temperatureBean = new TemperatureBean();
+        if (temp < 20) {
+            temperatureBean.setNum(20);
+        } else {
+            temperatureBean.setNum(temp);
+        }
+        temperatureBean.setSelected(selected);
+        temperatureBeanArrayList.add(temperatureBean);
+
+    }
+
     GizWifiDeviceListener gizWifiDeviceListener = new GizWifiDeviceListener() {
 
         /** 用于设备订阅 */
@@ -257,15 +328,11 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
             GosControlModuleBaseActivity.this.didSetSubscribe(result, device, isSubscribed);
         }
 
-        ;
-
         /** 用于获取设备状态 */
         public void didReceiveData(GizWifiErrorCode result, GizWifiDevice device,
                                    java.util.concurrent.ConcurrentHashMap<String, Object> dataMap, int sn) {
             GosControlModuleBaseActivity.this.didReceiveData(result, device, dataMap, sn);
         }
-
-        ;
 
         /** 用于设备硬件信息 */
         public void didGetHardwareInfo(GizWifiErrorCode result, GizWifiDevice device,
@@ -273,21 +340,15 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
             GosControlModuleBaseActivity.this.didGetHardwareInfo(result, device, hardwareInfo);
         }
 
-        ;
-
         /** 用于修改设备信息 */
         public void didSetCustomInfo(GizWifiErrorCode result, GizWifiDevice device) {
             GosControlModuleBaseActivity.this.didSetCustomInfo(result, device);
         }
 
-        ;
-
         /** 用于设备状态变化 */
         public void didUpdateNetStatus(GizWifiDevice device, GizWifiDeviceNetStatus netStatus) {
             GosControlModuleBaseActivity.this.didUpdateNetStatus(device, netStatus);
         }
-
-        ;
 
     };
 
@@ -309,8 +370,7 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
      * @param dataMap 当前设备状态
      * @param sn      命令序号
      */
-    protected void didReceiveData(GizWifiErrorCode result, GizWifiDevice device,
-                                  java.util.concurrent.ConcurrentHashMap<String, Object> dataMap, int sn) {
+    protected void didReceiveData(GizWifiErrorCode result, GizWifiDevice device, java.util.concurrent.ConcurrentHashMap<String, Object> dataMap, int sn) {
     }
 
     /**
@@ -320,8 +380,7 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
      * @param device       当前设备
      * @param hardwareInfo 当前设备硬件信息
      */
-    protected void didGetHardwareInfo(GizWifiErrorCode result, GizWifiDevice device,
-                                      java.util.concurrent.ConcurrentHashMap<String, String> hardwareInfo) {
+    protected void didGetHardwareInfo(GizWifiErrorCode result, GizWifiDevice device, java.util.concurrent.ConcurrentHashMap<String, String> hardwareInfo) {
     }
 
     /**
@@ -366,6 +425,10 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
         }
     }
 
+    public void UpdateSingle(Boolean s1, Boolean s2, Boolean s3, int type, int num, int week, int startTimeHour, int startTimeMin, int endHour, int endMin, int selectedH, int sm) {
+
+
+    }
 
     /**
      * Description:显示格式化数值，保留对应分辨率的小数个数，比如传入参数（20.3656，0.01），将返回20.37
@@ -381,6 +444,7 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
         }
         return Math.round(date) + "";
     }
+
     //提示框
     public void showAlertDialog(String msg, DialogInterface.OnClickListener listener) {
         AlertDialog dialog = new AlertDialog.Builder(this)
@@ -392,7 +456,7 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
                         dialog.dismiss();
                     }
                 })
-                .setPositiveButton("确定",listener)
+                .setPositiveButton("确定", listener)
                 .create();
         dialog.show();
     }

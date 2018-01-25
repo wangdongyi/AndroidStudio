@@ -21,6 +21,7 @@ import com.gizwits.opensource.appkit.ControlModule.GosDeviceControlActivity;
 import com.gizwits.opensource.appkit.PushModule.GosPushManager;
 import com.gizwits.opensource.appkit.SettingsModule.GosSettiingsActivity;
 import com.gizwits.opensource.appkit.UserModule.GosUserLoginActivity;
+import com.gizwits.opensource.appkit.UserModule.LoadingActivity;
 import com.gizwits.opensource.appkit.sharingdevice.gosZxingDeviceSharingActivity;
 import com.gizwits.opensource.appkit.utils.NetUtils;
 import com.gizwits.opensource.appkit.view.SlideListView2;
@@ -591,7 +592,9 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
             //  绑定推送
             GosPushManager.pushBindService(token);
         } else {
-            Toast.makeText(this, "登录失效请重启登录", toastTime).show();
+            Intent intent = new Intent(GosDeviceListActivity.this, GosUserLoginActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 

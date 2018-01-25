@@ -796,13 +796,13 @@
     <RelativeLayout
         android:id="@+id/close_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:visibility="visible">
 
         <ImageView
             android:id="@+id/imageView_close"
             android:layout_width="match_parent"
-            android:layout_height="1000dp"
+            android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:src="#00000000" />
 

@@ -74,13 +74,12 @@ import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.s
 import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected6;
 import static com.gizwits.opensource.appkit.ControlModule.SelectedWeekActivity.selected7;
 
-public class GosDeviceControlActivity extends GosControlModuleBaseActivity implements OnClickListener, OnEditorActionListener {
+public class GosDeviceControlActivity extends GosControlModuleBaseActivity  {
 
     /**
      * 设备列表传入的设备变量
      */
     private GizWifiDevice mDevice;
-
     private Button button;
     private Spinner nice_spinner;
     private TextView textView_time;
@@ -145,12 +144,9 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     private int starHour, starMinute, endHour, endMinute, timingHour, timingMinute;
     private Calendar mCalendar;
     private int selectedPosition;
-    private int type;
     private int optionType = 0;
     private NestedScrollView nestedScrollView;
     private ArrayList<Integer> selectedValue = new ArrayList<>();
-    private List<String> data = new LinkedList<>(Arrays.asList("手动", "自动", "定时"));
-    private int week = 0;
     private Switch switch1;
     private Switch switch2;
     private Switch switch3;
@@ -171,6 +167,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     private RelativeLayout qualified_layout_right;
     private LinearLayout qualified_layout_double;
     private boolean userDone = false;
+    private ArrayList<ItemViewBean> viewBeanArrayList = new ArrayList<>();
 
     private enum handler_key {
         //更新界面
@@ -214,7 +211,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
         setContentView(R.layout.activity_gos_device_control);
         StatusBarUtil.setStatusBarDark(getWindow(), false);
         initDevice();
-        setActionBar(true, true, getDeviceName());
         initView();
         getStatusOfDevice();
         initDate();
@@ -302,6 +298,21 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
         textView_qualified_time_right = (TextView) findViewById(R.id.textView_qualified_time_right);
         qualified_layout_right = (RelativeLayout) findViewById(R.id.qualified_layout_right);
         qualified_layout_double = (LinearLayout) findViewById(R.id.qualified_layout_double);
+        buildItem(left_one_layout, left_one_textView, switch4, true);
+        buildItem(left_two_layout, left_two_textView, switch6, false);
+        buildItem(left_three_layout, left_three_textView, switch8, false);
+        buildItem(right_one_layout, right_one_textView, switch5, false);
+        buildItem(right_two_layout, right_two_textView, switch7, false);
+        buildItem(right_three_layout, right_three_textView, switch9, false);
+    }
+
+    private void buildItem(LinearLayout linearLayout, TextView textView, Switch switch1, Boolean b) {
+        ItemViewBean itemViewBean = new ItemViewBean();
+        itemViewBean.setaSwitch(switch1);
+        itemViewBean.setLinearLayout(linearLayout);
+        itemViewBean.setTextView(textView);
+        itemViewBean.setSelected(b);
+        viewBeanArrayList.add(itemViewBean);
     }
 
     //关机动画
@@ -335,28 +346,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
         updateUI();//刷新界面
     }
 
-    private void changeMachine() {
-        if (Temp_Left2 + Temp_Left3 + Temp_Right1 + Temp_Right2 + Temp_Right3 == 0) {
-            initType(0);
-            type = 0;
-            selectedValue.add(0);
-        } else if (Temp_Left2 + Temp_Right2 + Temp_Left3 + Temp_Right3 == 0) {
-            initType(1);
-            type = 1;
-            selectedValue.add(0);
-            selectedValue.add(0);
-        } else {
-            initType(2);
-            type = 2;
-            selectedValue.add(0);
-            selectedValue.add(0);
-            selectedValue.add(0);
-            selectedValue.add(0);
-            selectedValue.add(0);
-            selectedValue.add(0);
-        }
-    }
-
     private void initClick() {
         imageView_back.setOnClickListener(new NoDoubleClickListener() {
             @Override
@@ -371,25 +360,24 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             }
         });
         MaterialUtil.MaterialBigRound(button);
+        imageView_right.setVisibility(View.INVISIBLE);
+        close_layout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         button.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendCommand();
             }
         });
-        initAnimation();
         imageView_right.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
-                isEdit = false;
-                initAnimation();
-            }
-        });
-        imageView_open_button.setOnClickListener(new NoDoubleClickListener() {
-            @Override
-            protected void onNoDoubleClick(View v) {
                 if (userDone) {
-                    showAlertDialog("是否退出登录", new DialogInterface.OnClickListener() {
+                    showAlertDialog("您有修改没有提交，是否提交？", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -399,9 +387,17 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                         }
                     });
                 } else {
-                    isEdit = true;
+                    isEdit = false;
                     initAnimation();
                 }
+            }
+        });
+        imageView_open_button.setOnClickListener(new NoDoubleClickListener() {
+            @Override
+            protected void onNoDoubleClick(View v) {
+                isEdit = true;
+                initAnimation();
+
 
             }
         });
@@ -511,11 +507,12 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             @Override
             public void onClick(View v) {
                 selectedPosition = 0;
+
                 left_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 left_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
-                circle_seekBar.setCurProcess(selectedValue.get(0) - 20);
+                circle_seekBar.setCurProcess(baseBean.getList().get(0).getNum() - 20);
                 if (switch2.isChecked()) {
                     left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
                     circle_seekBar.setEnabled(true);
@@ -538,7 +535,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             @Override
             public void onClick(View v) {
                 selectedPosition = 1;
-                circle_seekBar.setCurProcess(selectedValue.get(1) - 20);
+                circle_seekBar.setCurProcess(baseBean.getList().get(1).getNum() - 20);
                 right_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 left_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
@@ -561,64 +558,60 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 }
             }
         });
-
-        left_one_layout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPosition = 0;
-                selectedSix();
-            }
-        });
-        right_one_layout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPosition = 1;
-                selectedSix();
-            }
-        });
-        left_two_layout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPosition = 2;
-                selectedSix();
-            }
-        });
-        right_two_layout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPosition = 3;
-                selectedSix();
-            }
-        });
-        left_three_layout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPosition = 4;
-                selectedSix();
-            }
-        });
-        right_three_layout.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedPosition = 5;
-                selectedSix();
-            }
-        });
+        for (int i = 0; i < viewBeanArrayList.size(); i++) {
+            final ItemViewBean bean = viewBeanArrayList.get(i);
+            final int finalI = i;
+            bean.getLinearLayout().setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    selectedPosition = finalI;
+                    for (int j = 0; j < viewBeanArrayList.size(); j++) {
+                        if (finalI == j) {
+                            viewBeanArrayList.get(finalI).setSelected(true);
+                        } else {
+                            viewBeanArrayList.get(j).setSelected(false);
+                        }
+                    }
+                    selectedSix();
+                }
+            });
+            bean.getaSwitch().setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    //6温区
+                    userDone = true;
+                    if (bean.isSelected()) {
+                        if (isChecked) {
+                            circle_seekBar.setEnabled(true);
+                            imageView_jian.setClickable(true);
+                            imageView_jia.setClickable(true);
+                        } else {
+                            circle_seekBar.setEnabled(false);
+                            imageView_jian.setClickable(false);
+                            imageView_jia.setClickable(false);
+                        }
+                    }
+                    selectedSix();
+                }
+            });
+        }
         switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //单独开关
-                userDone = true;
-                if (isChecked) {
-                    single_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                    circle_seekBar.setEnabled(true);
-                    imageView_jian.setClickable(true);
-                    imageView_jia.setClickable(true);
-                } else {
-                    single_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.gray));
-                    circle_seekBar.setEnabled(false);
-                    imageView_jian.setClickable(false);
-                    imageView_jia.setClickable(false);
+                if (type == 0) {
+                    userDone = true;
+                    if (isChecked) {
+                        single_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
+                        circle_seekBar.setEnabled(true);
+                        imageView_jian.setClickable(true);
+                        imageView_jia.setClickable(true);
+                    } else {
+                        single_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.gray));
+                        circle_seekBar.setEnabled(false);
+                        imageView_jian.setClickable(false);
+                        imageView_jia.setClickable(false);
+                    }
                 }
             }
         });
@@ -664,108 +657,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     imageView_jian.setClickable(false);
                     imageView_jia.setClickable(false);
                 }
-            }
-        });
-        switch4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //6温区
-                userDone = true;
-                if (isChecked) {
-                    circle_seekBar.setEnabled(true);
-                    imageView_jian.setClickable(true);
-                    imageView_jia.setClickable(true);
-                } else {
-                    circle_seekBar.setEnabled(false);
-                    imageView_jian.setClickable(false);
-                    imageView_jia.setClickable(false);
-                }
-                selectedSix();
-            }
-        });
-        switch5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //6温区
-                userDone = true;
-                if (isChecked) {
-                    circle_seekBar.setEnabled(true);
-                    imageView_jian.setClickable(true);
-                    imageView_jia.setClickable(true);
-                } else {
-                    circle_seekBar.setEnabled(false);
-                    imageView_jian.setClickable(false);
-                    imageView_jia.setClickable(false);
-                }
-                selectedSix();
-            }
-        });
-        switch6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //6温区
-                userDone = true;
-                if (isChecked) {
-                    circle_seekBar.setEnabled(true);
-                    imageView_jian.setClickable(true);
-                    imageView_jia.setClickable(true);
-                } else {
-                    circle_seekBar.setEnabled(false);
-                    imageView_jian.setClickable(false);
-                    imageView_jia.setClickable(false);
-                }
-                selectedSix();
-            }
-        });
-        switch7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //6温区
-                userDone = true;
-                if (isChecked) {
-                    circle_seekBar.setEnabled(true);
-                    imageView_jian.setClickable(true);
-                    imageView_jia.setClickable(true);
-                } else {
-                    circle_seekBar.setEnabled(false);
-                    imageView_jian.setClickable(false);
-                    imageView_jia.setClickable(false);
-                }
-                selectedSix();
-            }
-        });
-        switch8.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //6温区
-                userDone = true;
-                if (isChecked) {
-                    circle_seekBar.setEnabled(true);
-                    imageView_jian.setClickable(true);
-                    imageView_jia.setClickable(true);
-                } else {
-                    circle_seekBar.setEnabled(false);
-                    imageView_jian.setClickable(false);
-                    imageView_jia.setClickable(false);
-                }
-                selectedSix();
-            }
-        });
-        switch9.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //6温区
-                userDone = true;
-                if (isChecked) {
-                    circle_seekBar.setEnabled(true);
-                    imageView_jian.setClickable(true);
-                    imageView_jia.setClickable(true);
-                } else {
-                    circle_seekBar.setEnabled(false);
-                    imageView_jian.setClickable(false);
-                    imageView_jia.setClickable(false);
-                }
-                selectedSix();
             }
         });
         switch11.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -885,16 +776,25 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             textView_num.setText(20 + "");
         switch (type) {
             case 0:
-                selectedValue.set(0, value);
+                if (selectedValue.size() < 1)
+                    selectedValue.add(0, value);
+                else
+                    selectedValue.set(0, value);
                 break;
             case 1:
                 switch (selectedPosition) {
                     case 0:
-                        selectedValue.set(0, value);
+                        if (selectedValue.size() < 1)
+                            selectedValue.add(0, value);
+                        else
+                            selectedValue.set(0, value);
                         left_double_textView.setText(value + "℃");
                         break;
                     case 1:
-                        selectedValue.set(1, value);
+                        if (selectedValue.size() < 2)
+                            selectedValue.add(0, value);
+                        else
+                            selectedValue.set(0, value);
                         right_double_textView.setText(value + "℃");
                         break;
                 }
@@ -902,27 +802,45 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             case 2:
                 switch (selectedPosition) {
                     case 0:
-                        selectedValue.set(0, value);
+                        if (selectedValue.size() < 1)
+                            selectedValue.add(0, value);
+                        else
+                            selectedValue.set(0, value);
                         left_one_textView.setText(value + "℃");
                         break;
                     case 1:
-                        selectedValue.set(1, value);
+                        if (selectedValue.size() < 2)
+                            selectedValue.add(1, value);
+                        else
+                            selectedValue.set(1, value);
                         right_one_textView.setText(value + "℃");
                         break;
                     case 2:
-                        selectedValue.set(2, value);
+                        if (selectedValue.size() < 3)
+                            selectedValue.add(2, value);
+                        else
+                            selectedValue.set(2, value);
                         left_two_textView.setText(value + "℃");
                         break;
                     case 3:
-                        selectedValue.set(3, value);
+                        if (selectedValue.size() < 4)
+                            selectedValue.add(3, value);
+                        else
+                            selectedValue.set(3, value);
                         right_two_textView.setText(value + "℃");
                         break;
                     case 4:
-                        selectedValue.set(4, value);
+                        if (selectedValue.size() < 5)
+                            selectedValue.add(4, value);
+                        else
+                            selectedValue.set(4, value);
                         left_three_textView.setText(value + "℃");
                         break;
                     case 5:
-                        selectedValue.set(5, value);
+                        if (selectedValue.size() < 6)
+                            selectedValue.add(5, value);
+                        else
+                            selectedValue.set(5, value);
                         right_three_textView.setText(value + "℃");
                         break;
                 }
@@ -949,101 +867,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 single_layout.setVisibility(View.GONE);
                 main_double_layout.setVisibility(View.GONE);
                 main_six_layout.setVisibility(View.VISIBLE);
-                break;
-        }
-    }
-
-    private void upSelectedValue() {
-        switch (type) {
-            case 0://单温区
-                circle_seekBar.setCurProcess(Temp_Left1 - 20);
-                break;
-            case 1://双温区
-                switch (selectedPosition) {
-                    case 0://左温区
-                        circle_seekBar.setCurProcess(Temp_Left1 - 20);
-                        break;
-                    case 1:
-                        circle_seekBar.setCurProcess(Temp_Right1 - 20);
-                        break;
-                }
-                break;
-            case 2:
-                switch (selectedPosition) {
-                    case 0:
-                        circle_seekBar.setCurProcess(Temp_Left1 - 20);
-                        if (switch2.isChecked()) {
-                            circle_seekBar.setEnabled(true);
-                            imageView_jian.setClickable(true);
-                            imageView_jia.setClickable(true);
-                        } else {
-                            circle_seekBar.setEnabled(false);
-                            imageView_jian.setClickable(false);
-                            imageView_jia.setClickable(false);
-                        }
-                        break;
-                    case 1:
-                        circle_seekBar.setCurProcess(Temp_Right1 - 20);
-                        if (switch3.isChecked()) {
-                            circle_seekBar.setEnabled(true);
-                            imageView_jian.setClickable(true);
-                            imageView_jia.setClickable(true);
-                        } else {
-                            circle_seekBar.setEnabled(false);
-                            imageView_jian.setClickable(false);
-                            imageView_jia.setClickable(false);
-                        }
-                        break;
-                    case 2:
-                        circle_seekBar.setCurProcess(Temp_Left2 - 20);
-                        if (switch4.isChecked()) {
-                            circle_seekBar.setEnabled(true);
-                            imageView_jian.setClickable(true);
-                            imageView_jia.setClickable(true);
-                        } else {
-                            circle_seekBar.setEnabled(false);
-                            imageView_jian.setClickable(false);
-                            imageView_jia.setClickable(false);
-                        }
-                        break;
-                    case 3:
-                        circle_seekBar.setCurProcess(Temp_Right2 - 20);
-                        if (switch5.isChecked()) {
-                            circle_seekBar.setEnabled(true);
-                            imageView_jian.setClickable(true);
-                            imageView_jia.setClickable(true);
-                        } else {
-                            circle_seekBar.setEnabled(false);
-                            imageView_jian.setClickable(false);
-                            imageView_jia.setClickable(false);
-                        }
-                        break;
-                    case 4:
-                        circle_seekBar.setCurProcess(Temp_Left3 - 20);
-                        if (switch6.isChecked()) {
-                            circle_seekBar.setEnabled(true);
-                            imageView_jian.setClickable(true);
-                            imageView_jia.setClickable(true);
-                        } else {
-                            circle_seekBar.setEnabled(false);
-                            imageView_jian.setClickable(false);
-                            imageView_jia.setClickable(false);
-                        }
-                        break;
-                    case 5:
-                        circle_seekBar.setCurProcess(Temp_Right3 - 20);
-                        if (switch7.isChecked()) {
-                            circle_seekBar.setEnabled(true);
-                            imageView_jian.setClickable(true);
-                            imageView_jia.setClickable(true);
-                        } else {
-                            circle_seekBar.setEnabled(false);
-                            imageView_jian.setClickable(false);
-                            imageView_jia.setClickable(false);
-                        }
-                        break;
-                }
-
                 break;
         }
     }
@@ -1114,7 +937,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(0) - 20);
                 break;
             case 1:
                 if (switch4.isChecked())
@@ -1166,7 +988,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(1) - 20);
                 break;
             case 2:
                 if (switch4.isChecked())
@@ -1218,7 +1039,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(2) - 20);
                 break;
             case 3:
                 if (switch4.isChecked())
@@ -1270,7 +1090,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(3) - 20);
                 break;
             case 4:
                 if (switch4.isChecked())
@@ -1322,7 +1141,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     right_three_layout.setBackgroundResource(R.color.gray);
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
-                circle_seekBar.setCurProcess(selectedValue.get(4) - 20);
                 break;
             case 5:
                 if (switch4.isChecked())
@@ -1375,7 +1193,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 }
                 right_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                 right_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
-                circle_seekBar.setCurProcess(selectedValue.get(5) - 20);
                 break;
         }
     }
@@ -1387,12 +1204,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
     public void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacks(mRunnable);
@@ -1401,221 +1212,15 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
         mDevice.setListener(null);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            default:
-                break;
-        }
-    }
-
-    /*
-     * ========================================================================
-     * EditText 点击键盘“完成”按钮方法
-     * ========================================================================
-     */
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-
-        switch (v.getId()) {
-            default:
-                break;
-        }
-        hideKeyBoard();
-        return false;
-
-    }
-
-    /*
-     * ========================================================================
-     * 菜单栏
-     * ========================================================================
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.device_more, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.action_setDeviceInfo:
-                setDeviceInfo();
-                break;
-
-            case R.id.action_getHardwareInfo:
-                if (mDevice.isLAN()) {
-                    mDevice.getHardwareInfo();
-                } else {
-                    myToast("只允许在局域网下获取设备硬件信息！");
-                }
-                break;
-
-            case R.id.action_getStatu:
-                mDevice.getDeviceStatus();
-                break;
-
-            default:
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
     /**
      * Description:根据保存的的数据点的值来更新UI
      */
     @SuppressLint("SetTextI18n")
     protected void updateUI() {
-        changeMachine();
-        NotificationUtil.getInstance(GosDeviceControlActivity.this).sendNotification(this, Waring);
-        switch11.setChecked(switch1Selected);//总开关状态
-        if (switch11.isChecked()) {
-            switch1.setEnabled(true);
-            switch2.setEnabled(true);
-            switch3.setEnabled(true);
-            switch4.setEnabled(true);
-            switch5.setEnabled(true);
-            switch6.setEnabled(true);
-            switch7.setEnabled(true);
-            switch8.setEnabled(true);
-            switch9.setEnabled(true);
-            switch10.setEnabled(true);
-        } else {
-            switch1.setEnabled(false);
-            switch2.setEnabled(false);
-            switch3.setEnabled(false);
-            switch4.setEnabled(false);
-            switch5.setEnabled(false);
-            switch6.setEnabled(false);
-            switch7.setEnabled(false);
-            switch8.setEnabled(false);
-            switch9.setEnabled(false);
-            switch10.setEnabled(false);
-        }
-
-        switch (type) {
-            case 0:
-                selectedValue.set(0, Temp_Left1);
-                if (switch1Selected) {
-                    switch1.setChecked(switch2Selected);
-                } else {
-                    switch1.setChecked(false);
-                    switch10.setChecked(false);
-                }
-                break;
-            case 1:
-                selectedValue.set(0, Temp_Left1);
-                left_double_textView.setText(Temp_Left1 + "℃");
-                selectedValue.set(1, Temp_Right1);
-                right_double_textView.setText(Temp_Right1 + "℃");
-                if (switch1Selected) {
-                    switch2.setChecked(switch2Selected);
-                    switch3.setChecked(switch5Selected);
-                } else {
-                    switch2.setChecked(false);
-                    switch3.setChecked(false);
-                }
-                break;
-            case 2:
-                selectedValue.set(0, Temp_Left1);
-                left_one_textView.setText(Temp_Left1 + "℃");
-                selectedValue.set(1, Temp_Right1);
-                right_one_textView.setText(Temp_Right1 + "℃");
-                selectedValue.set(2, Temp_Left2);
-                left_two_textView.setText(Temp_Left2 + "℃");
-                selectedValue.set(3, Temp_Right2);
-                right_two_textView.setText(Temp_Right2 + "℃");
-                selectedValue.set(4, Temp_Left3);
-                left_three_textView.setText(Temp_Left3 + "℃");
-                selectedValue.set(5, Temp_Right3);
-                right_three_textView.setText(Temp_Right3 + "℃");
-                if (switch1Selected) {
-                    switch4.setChecked(switch2Selected);
-                    switch5.setChecked(switch3Selected);
-                    switch6.setChecked(switch4Selected);
-                    switch7.setChecked(switch5Selected);
-                    switch8.setChecked(switch6Selected);
-                    switch9.setChecked(switch7Selected);
-                } else {
-                    switch4.setChecked(false);
-                    switch5.setChecked(false);
-                    switch6.setChecked(false);
-                    switch7.setChecked(false);
-                    switch8.setChecked(false);
-                    switch9.setChecked(false);
-                }
-
-        }
-        upSelectedValue();
-        if (mode > 2) {
-            mode = 0;
-        }
-        nice_spinner.setSelection(mode);
-        switch (mode) {
-            case 0:
-                //手动
-                optionType = 0;
-                textView_keller.setVisibility(View.VISIBLE);
-                switch10.setVisibility(View.VISIBLE);
-                switch10.setChecked(switch8Selected);
-                layout_automatic.setVisibility(View.GONE);
-                main_qualified_layout.setVisibility(View.GONE);
-                qualified_layout_double.setVisibility(View.GONE);
-                break;
-            case 1:
-                optionType = 1;
-                textView_keller.setVisibility(View.INVISIBLE);
-                switch10.setVisibility(View.INVISIBLE);
-                switch10.setChecked(switch8Selected);
-                layout_automatic.setVisibility(View.VISIBLE);
-                main_qualified_layout.setVisibility(View.GONE);
-                qualified_layout_double.setVisibility(View.GONE);
-                starHour = StartTimeHour;
-                starMinute = StartTimeMin;
-                endHour = CloseTimeHour;
-                endMinute = CloseTimeMin;
-                textView_start_time.setText((starHour < 10 ? "0" + starHour : starHour) + ":" + (starMinute < 10 ? "0" + starMinute : starMinute));
-                textView_end_time.setText((endHour < 10 ? "0" + endHour : endHour) + ":" + (endMinute < 10 ? "0" + endMinute : endMinute));
-                break;
-            case 2:
-                optionType = 2;
-                textView_keller.setVisibility(View.INVISIBLE);
-                switch10.setVisibility(View.INVISIBLE);
-                switch10.setChecked(switch8Selected);
-                layout_automatic.setVisibility(View.GONE);
-                if (type == 1) {
-                    qualified_layout_double.setVisibility(View.VISIBLE);
-                    main_qualified_layout.setVisibility(View.GONE);
-                    timingHour = TimeHour;
-                    timingMinute = TimeMin;
-                    textView_qualified_time_left.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
-                    textView_qualified_time_right.setText((Hour_double < 10 ? "0" + Hour_double : Hour_double) + ":" + (Minutes_double < 10 ? "0" + Minutes_double : Minutes_double));
-                } else {
-                    qualified_layout_double.setVisibility(View.GONE);
-                    main_qualified_layout.setVisibility(View.VISIBLE);
-                    timingHour = TimeHour;
-                    timingMinute = TimeMin;
-                    textView_qualified_time.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
-                }
-
-                break;
-        }
-        getWeek(Week);
+        changeSwitch();//总开关
+        changeMode();//模式
+        changeTemperature();//修改温度
         waringLayout();
-        MyGizWifiDevice myGizWifiDevice = new MyGizWifiDevice();
-        myGizWifiDevice.setWaring(Waring);
-        myGizWifiDevice.setOpen(switch1Selected);
-        myGizWifiDevice.setGizWifiDevice(mDevice);
-        EventBus.getDefault().post(new MessageEvent("刷新", myGizWifiDevice));
-    }
-
-    private void setEditText(EditText et, Object value) {
-        et.setText(value.toString());
-        et.setSelection(value.toString().length());
-        et.clearFocus();
     }
 
     private void waringLayout() {
@@ -1643,6 +1248,12 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                 EventBus.getDefault().post(new MessageEvent("刷新", myGizWifiDevice));
             }
         });
+        NotificationUtil.getInstance(GosDeviceControlActivity.this).sendNotification(this, Waring);
+        MyGizWifiDevice myGizWifiDevice = new MyGizWifiDevice();
+        myGizWifiDevice.setWaring(Waring);
+        myGizWifiDevice.setOpen(switch1Selected);
+        myGizWifiDevice.setGizWifiDevice(mDevice);
+        EventBus.getDefault().post(new MessageEvent("刷新", myGizWifiDevice));
     }
 
     //总开关
@@ -1714,6 +1325,157 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
         }
     }
 
+    //修改总开关状态
+    private void changeSwitch() {
+        switch11.setChecked(baseBean.getAllSwitch());//总开关状态
+        if (switch11.isChecked()) {
+            switch1.setEnabled(true);
+            switch2.setEnabled(true);
+            switch3.setEnabled(true);
+            switch4.setEnabled(true);
+            switch5.setEnabled(true);
+            switch6.setEnabled(true);
+            switch7.setEnabled(true);
+            switch8.setEnabled(true);
+            switch9.setEnabled(true);
+            switch10.setEnabled(true);
+        } else {
+            switch1.setEnabled(false);
+            switch2.setEnabled(false);
+            switch3.setEnabled(false);
+            switch4.setEnabled(false);
+            switch5.setEnabled(false);
+            switch6.setEnabled(false);
+            switch7.setEnabled(false);
+            switch8.setEnabled(false);
+            switch9.setEnabled(false);
+            switch10.setEnabled(false);
+        }
+    }
+
+    //修改模式状态
+    @SuppressLint("SetTextI18n")
+    private void changeMode() {
+        nice_spinner.setSelection(baseBean.getType());
+        switch (baseBean.getType()) {
+            case 0:
+                //手动
+                textView_keller.setVisibility(View.VISIBLE);
+                switch10.setVisibility(View.VISIBLE);
+                layout_automatic.setVisibility(View.GONE);
+                main_qualified_layout.setVisibility(View.GONE);
+                qualified_layout_double.setVisibility(View.GONE);
+                if (baseBean.getManualBean() == null) {
+                    return;
+                }
+                if (baseBean.getAllSwitch())
+                    switch10.setChecked(baseBean.getManualBean().getKillSwitch());
+                else
+                    switch10.setChecked(false);
+                break;
+            case 1:
+                textView_keller.setVisibility(View.INVISIBLE);
+                switch10.setVisibility(View.INVISIBLE);
+                layout_automatic.setVisibility(View.VISIBLE);
+                main_qualified_layout.setVisibility(View.GONE);
+                qualified_layout_double.setVisibility(View.GONE);
+                AutomaticBean automaticBean = baseBean.getAutomaticBean();
+                if (automaticBean == null) {
+                    return;
+                }
+                getWeek(automaticBean.getWeek());
+                starHour = automaticBean.getStarHour();
+                starMinute = automaticBean.getStarMinute();
+                endHour = automaticBean.getEndHour();
+                endMinute = automaticBean.getEndMinute();
+                textView_start_time.setText((starHour < 10 ? "0" + starHour : starHour) + ":" + (starMinute < 10 ? "0" + starMinute : starMinute));
+                textView_end_time.setText((endHour < 10 ? "0" + endHour : endHour) + ":" + (endMinute < 10 ? "0" + endMinute : endMinute));
+                break;
+            case 2:
+                textView_keller.setVisibility(View.INVISIBLE);
+                switch10.setVisibility(View.INVISIBLE);
+                layout_automatic.setVisibility(View.GONE);
+                TimingBean timingBean = baseBean.getTimingBean();
+                if (timingBean == null) {
+                    return;
+                }
+
+                timingHour = timingBean.getHour();
+                timingMinute = timingBean.getMinute();
+                if (type == 1) {
+                    qualified_layout_double.setVisibility(View.VISIBLE);
+                    main_qualified_layout.setVisibility(View.GONE);
+                    int hourR = timingBean.getHourRight();
+                    int minR = timingBean.getMinuteRight();
+                    textView_qualified_time_left.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
+                    textView_qualified_time_right.setText((hourR < 10 ? "0" + hourR : hourR) + ":" + (minR < 10 ? "0" + minR : minR));
+                } else {
+                    qualified_layout_double.setVisibility(View.GONE);
+                    main_qualified_layout.setVisibility(View.VISIBLE);
+                    textView_qualified_time.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
+                }
+                break;
+        }
+    }
+
+    //修改温度
+    @SuppressLint("SetTextI18n")
+    private void changeTemperature() {
+        initType(type);
+        switch (type) {
+            case 0:
+                TemperatureBean temperatureBean = baseBean.getList().get(0);
+                if (baseBean.getAllSwitch()) {
+                    switch1.setChecked(temperatureBean.getSelected());
+                } else {
+                    switch1.setChecked(false);
+                }
+                circle_seekBar.setCurProcess(temperatureBean.getNum() - 20);
+                break;
+            case 1:
+                TemperatureBean tL = baseBean.getList().get(0);
+                TemperatureBean tR = baseBean.getList().get(1);
+                left_double_textView.setText(tL.getNum() + "℃");
+                right_double_textView.setText(tR.getNum() + "℃");
+                if (baseBean.getAllSwitch()) {
+                    switch2.setChecked(tL.getSelected());
+                    switch3.setChecked(tR.getSelected());
+                } else {
+                    switch2.setChecked(false);
+                    switch3.setChecked(false);
+                }
+                if (selectedPosition == 0) {
+                    circle_seekBar.setCurProcess(tL.getNum() - 20);
+                } else {
+                    circle_seekBar.setCurProcess(tR.getNum() - 20);
+                }
+                break;
+            case 2:
+                for (int i = 0; i < viewBeanArrayList.size(); i++) {
+                    ItemViewBean viewBean = viewBeanArrayList.get(i);
+                    TemperatureBean tBS = baseBean.getList().get(i);
+                    viewBean.getTextView().setText(tBS.getNum() + "℃");
+                    if (baseBean.getAllSwitch()) {
+                        viewBean.getaSwitch().setChecked(tBS.getSelected());
+                    } else {
+                        viewBean.getaSwitch().setChecked(false);
+                    }
+                    if (viewBean.isSelected()) {
+                        if (viewBean.getaSwitch().isChecked()) {
+                            circle_seekBar.setEnabled(true);
+                            imageView_jian.setClickable(true);
+                            imageView_jia.setClickable(true);
+                        } else {
+                            circle_seekBar.setEnabled(false);
+                            imageView_jian.setClickable(false);
+                            imageView_jia.setClickable(false);
+                        }
+                    }
+
+                }
+        }
+    }
+
     /**
      * 发送指令,下发单个数据点的命令可以用这个方法
      * <p>
@@ -1722,8 +1484,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
      * 下发多个数据点命令不能用这个方法多次调用，一次性多次调用这个方法会导致模组无法正确接收消息，参考方法内注释。
      * </p>
      */
-    boolean isSend = false;
-
     private void sendCommand() {
         int sn = 5;
         ConcurrentHashMap<String, Object> hashMap = new ConcurrentHashMap<String, Object>();
@@ -1732,7 +1492,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             switch (type) {
                 case 0:
                     hashMap.put(KEY_DATA15, switch1.isChecked());//单开关
-                    switch2Selected = switch1.isChecked();
                     if (switch1.isChecked() && selectedValue.get(0) != Temp_Left1) {
                         //温度不同时才上传
                         hashMap.put(KEY_DATA, selectedValue.get(0));
@@ -1749,8 +1508,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                         hashMap.put(KEY_DATA3, selectedValue.get(1));
 
                     }
-                    switch2Selected = switch2.isChecked();
-                    switch5Selected = switch3.isChecked();
                     break;
                 case 2:
                     hashMap.put(KEY_DATA15, switch4.isChecked());//左上温区开关
@@ -1777,18 +1534,11 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
                     if (switch9.isChecked() && selectedValue.get(5) != Temp_Right3) {
                         hashMap.put(KEY_DATA5, selectedValue.get(5));
                     }
-                    switch2Selected = switch4.isChecked();
-                    switch3Selected = switch6.isChecked();
-                    switch4Selected = switch8.isChecked();
-                    switch5Selected = switch5.isChecked();
-                    switch6Selected = switch7.isChecked();
-                    switch7Selected = switch9.isChecked();
                     break;
             }
             switch (optionType) {
                 case 0:
                     hashMap.put(KEY_DATA21, switch10.isChecked());//一键杀菌
-                    switch8Selected = switch10.isChecked();
                     break;
                 case 1:
                     if (starHour + starMinute + endHour + endMinute == 0) {
@@ -1832,9 +1582,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
             }
             hashMap.put(KEY_DATA22, optionType);
         }
-        isSend = true;
         mDevice.write(hashMap, sn);
-        Log.i("liang", "下发命令：" + hashMap.toString());
     }
 
     private int getWeek() {
@@ -1955,65 +1703,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
         new AlertDialog.Builder(this).setTitle(hardwareInfoTitle).setMessage(hardwareInfo).setPositiveButton(R.string.besure, null).show();
     }
 
-    /**
-     * Description:设置设备别名与备注
-     */
-    private void setDeviceInfo() {
-
-        final Dialog mDialog = new AlertDialog.Builder(this).setView(new EditText(this)).create();
-        mDialog.show();
-
-        Window window = mDialog.getWindow();
-        window.setContentView(R.layout.alert_gos_set_device_info);
-
-        final EditText etAlias;
-        final EditText etRemark;
-        etAlias = (EditText) window.findViewById(R.id.etAlias);
-        etRemark = (EditText) window.findViewById(R.id.etRemark);
-
-        LinearLayout llNo, llSure;
-        llNo = (LinearLayout) window.findViewById(R.id.llNo);
-        llSure = (LinearLayout) window.findViewById(R.id.llSure);
-
-        if (!TextUtils.isEmpty(mDevice.getAlias())) {
-            setEditText(etAlias, mDevice.getAlias());
-        }
-        if (!TextUtils.isEmpty(mDevice.getRemark())) {
-            setEditText(etRemark, mDevice.getRemark());
-        }
-
-        llNo.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                mDialog.dismiss();
-            }
-        });
-
-        llSure.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(etRemark.getText().toString()) && TextUtils.isEmpty(etAlias.getText().toString())) {
-                    myToast("请输入设备别名或备注！");
-                    return;
-                }
-                mDevice.setCustomInfo(etRemark.getText().toString(), etAlias.getText().toString());
-                mDialog.dismiss();
-                String loadingText = (String) getText(R.string.loadingtext);
-                progressDialog.setMessage(loadingText);
-                progressDialog.show();
-            }
-        });
-
-        mDialog.setOnDismissListener(new OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                hideKeyBoard();
-            }
-        });
-    }
-
     /*
      * 获取设备硬件信息回调
      */
@@ -2046,13 +1735,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     @Override
     protected void didSetCustomInfo(GizWifiErrorCode result, GizWifiDevice device) {
         super.didSetCustomInfo(result, device);
-        if (GizWifiErrorCode.GIZ_SDK_SUCCESS == result) {
-//            myToast("设置成功");
-            progressDialog.cancel();
-            finish();
-        } else {
-//            myToast("设置失败：" + result.name());
-        }
     }
 
     /*
@@ -2075,15 +1757,16 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity imple
     @Override
     protected void didReceiveData(GizWifiErrorCode result, GizWifiDevice device, ConcurrentHashMap<String, Object> dataMap, int sn) {
         super.didReceiveData(result, device, dataMap, sn);
-        Log.i("liang", "接收到数据");
-        if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS && dataMap.get("data") != null) {
-            if (isSend) {
+        if (result == GizWifiErrorCode.GIZ_SDK_SUCCESS) {
+            if (dataMap.get("data") != null) {
+                getDataFromReceiveDataMap(dataMap);
+                mHandler.sendEmptyMessage(handler_key.UPDATE_UI.ordinal());
+            } else {
                 myToast("提交成功");
-                isSend = false;
+                isEdit = false;
+                initAnimation();
+                getStatusOfDevice();
             }
-            getDataFromReceiveDataMap(dataMap);
-            mHandler.sendEmptyMessage(handler_key.UPDATE_UI.ordinal());
-
         }
     }
 

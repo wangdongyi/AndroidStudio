@@ -301,6 +301,9 @@ public class GosUserLoginActivity extends GosUserModuleBaseActivity implements O
                 etPsw.setSelection(psw.length());
             }
         });
+        etName.setText(spf.getString("UserName", ""));
+        etPsw.setText(spf.getString("PassWord", ""));
+        etName.setSelection(spf.getString("UserName", "").length());
     }
 
     @Override

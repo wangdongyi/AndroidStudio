@@ -343,7 +343,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
         close_layout.setVisibility(View.VISIBLE);
         imageView_right.setVisibility(View.INVISIBLE);
         button.setVisibility(View.GONE);
-        updateUI();//刷新界面
     }
 
     private void initClick() {
@@ -364,7 +363,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
         close_layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                myToast("想修改请先点右上角解锁");
             }
         });
         button.setOnClickListener(new OnClickListener() {

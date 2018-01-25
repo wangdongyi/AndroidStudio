@@ -264,32 +264,26 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
             mode = 0;
         }
         baseBean.setType(mode);
-        switch (mode) {
-            case 0:
-                ManualBean manualBean = new ManualBean();
-                manualBean.setKillSwitch(switch8Selected);
-                baseBean.setManualBean(manualBean);
-                break;
-            case 1:
-                AutomaticBean automaticBean = new AutomaticBean();
-                automaticBean.setStarHour(StartTimeHour);
-                automaticBean.setStarMinute(StartTimeMin);
-                automaticBean.setEndHour(CloseTimeHour);
-                automaticBean.setEndMinute(CloseTimeMin);
-                automaticBean.setWeek(Week);
-                baseBean.setAutomaticBean(automaticBean);
-                break;
-            case 2:
-                TimingBean timingBean = new TimingBean();
-                timingBean.setHour(TimeHour);
-                timingBean.setMinute(TimeMin);
-                if (type == 1) {
-                    timingBean.setHourRight(Hour_double);
-                    timingBean.setMinuteRight(Minutes_double);
-                }
-                baseBean.setTimingBean(timingBean);
-                break;
+        ManualBean manualBean = new ManualBean();
+        manualBean.setKillSwitch(switch8Selected);
+        baseBean.setManualBean(manualBean);
+
+        AutomaticBean automaticBean = new AutomaticBean();
+        automaticBean.setStarHour(StartTimeHour);
+        automaticBean.setStarMinute(StartTimeMin);
+        automaticBean.setEndHour(CloseTimeHour);
+        automaticBean.setEndMinute(CloseTimeMin);
+        automaticBean.setWeek(Week);
+
+        baseBean.setAutomaticBean(automaticBean);
+        TimingBean timingBean = new TimingBean();
+        timingBean.setHour(TimeHour);
+        timingBean.setMinute(TimeMin);
+        if (type == 1) {
+            timingBean.setHourRight(Hour_double);
+            timingBean.setMinuteRight(Minutes_double);
         }
+        baseBean.setTimingBean(timingBean);
         temperatureBeanArrayList.clear();
         if (Temp_Left2 + Temp_Left3 + Temp_Right1 + Temp_Right2 + Temp_Right3 == 0) {
             type = 0;

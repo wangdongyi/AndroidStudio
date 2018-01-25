@@ -709,32 +709,59 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 switch (position) {
                     case 0:
                         //手动
-                        optionType = 0;
                         textView_keller.setVisibility(View.VISIBLE);
                         switch10.setVisibility(View.VISIBLE);
                         layout_automatic.setVisibility(View.GONE);
                         main_qualified_layout.setVisibility(View.GONE);
                         qualified_layout_double.setVisibility(View.GONE);
+                        if (baseBean.getManualBean() == null) {
+                            return;
+                        }
+                        if (baseBean.getAllSwitch())
+                            switch10.setChecked(baseBean.getManualBean().getKillSwitch());
+                        else
+                            switch10.setChecked(false);
                         break;
                     case 1:
-                        optionType = 1;
                         textView_keller.setVisibility(View.INVISIBLE);
                         switch10.setVisibility(View.INVISIBLE);
                         layout_automatic.setVisibility(View.VISIBLE);
                         main_qualified_layout.setVisibility(View.GONE);
                         qualified_layout_double.setVisibility(View.GONE);
+                        AutomaticBean automaticBean = baseBean.getAutomaticBean();
+                        if (automaticBean == null) {
+                            return;
+                        }
+                        getWeek(automaticBean.getWeek());
+                        starHour = automaticBean.getStarHour();
+                        starMinute = automaticBean.getStarMinute();
+                        endHour = automaticBean.getEndHour();
+                        endMinute = automaticBean.getEndMinute();
+                        textView_start_time.setText((starHour < 10 ? "0" + starHour : starHour) + ":" + (starMinute < 10 ? "0" + starMinute : starMinute));
+                        textView_end_time.setText((endHour < 10 ? "0" + endHour : endHour) + ":" + (endMinute < 10 ? "0" + endMinute : endMinute));
                         break;
                     case 2:
-                        optionType = 2;
                         textView_keller.setVisibility(View.INVISIBLE);
                         switch10.setVisibility(View.INVISIBLE);
                         layout_automatic.setVisibility(View.GONE);
+                        TimingBean timingBean = baseBean.getTimingBean();
+                        if (timingBean == null) {
+                            return;
+                        }
+
+                        timingHour = timingBean.getHour();
+                        timingMinute = timingBean.getMinute();
                         if (type == 1) {
                             qualified_layout_double.setVisibility(View.VISIBLE);
                             main_qualified_layout.setVisibility(View.GONE);
+                            int hourR = timingBean.getHourRight();
+                            int minR = timingBean.getMinuteRight();
+                            textView_qualified_time_left.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
+                            textView_qualified_time_right.setText((hourR < 10 ? "0" + hourR : hourR) + ":" + (minR < 10 ? "0" + minR : minR));
                         } else {
                             qualified_layout_double.setVisibility(View.GONE);
                             main_qualified_layout.setVisibility(View.VISIBLE);
+                            textView_qualified_time.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
                         }
                         break;
                 }

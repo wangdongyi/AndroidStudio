@@ -274,16 +274,15 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
         automaticBean.setEndHour(CloseTimeHour);
         automaticBean.setEndMinute(CloseTimeMin);
         automaticBean.setWeek(Week);
-
         baseBean.setAutomaticBean(automaticBean);
+
         TimingBean timingBean = new TimingBean();
         timingBean.setHour(TimeHour);
         timingBean.setMinute(TimeMin);
-        if (type == 1) {
-            timingBean.setHourRight(Hour_double);
-            timingBean.setMinuteRight(Minutes_double);
-        }
+        timingBean.setHourRight(Hour_double);
+        timingBean.setMinuteRight(Minutes_double);
         baseBean.setTimingBean(timingBean);
+
         temperatureBeanArrayList.clear();
         if (Temp_Left2 + Temp_Left3 + Temp_Right1 + Temp_Right2 + Temp_Right3 == 0) {
             type = 0;
@@ -300,6 +299,7 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
             buildTemperature(switch5Selected, Temp_Right1);
             buildTemperature(switch6Selected, Temp_Right1);
             buildTemperature(switch7Selected, Temp_Right1);
+
         }
     }
 

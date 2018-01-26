@@ -54,7 +54,7 @@
     <string name="add_device">添加</string>
     <string name="addDeviceTitle">设备</string>
     <string name="add_device_menu">添加设备</string>
-    <string name="like_img">接通电源，确认设备处于待连接状态，如上图亮红灯</string>
+    <string name="like_img">请确认网络名称和密码按要求设置，且输入无误后，重新连接配置</string>
     <string name="noredlight">不是亮红灯？</string>
     <string name="finished">已完成上述操作</string>
     <string name="join_by_hands">手动连接设备</string>

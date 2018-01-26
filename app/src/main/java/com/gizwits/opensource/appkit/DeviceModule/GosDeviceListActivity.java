@@ -295,8 +295,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
 
                 case SHOWDIALOG:
 
-                    if (!softNameList.toString()
-                            .contains(GosMessageHandler.getSingleInstance().getNewDeviceList().toString())) {
+                    if (!softNameList.toString().contains(GosMessageHandler.getSingleInstance().getNewDeviceList().toString())) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(GosDeviceListActivity.this);
                         View view = View.inflate(GosDeviceListActivity.this, R.layout.alert_gos_new_device, null);
                         Button diss = (Button) view.findViewById(R.id.diss);

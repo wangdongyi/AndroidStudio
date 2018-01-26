@@ -146,7 +146,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
     private int selectedPosition;
     private int optionType = 0;
     private NestedScrollView nestedScrollView;
-    private ArrayList<Integer> selectedValue = new ArrayList<>();
     private Switch switch1;
     private Switch switch2;
     private Switch switch3;
@@ -172,6 +171,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
     private enum handler_key {
         //更新界面
         UPDATE_UI,
+        UPDATE,
         DISCONNECT,
     }
 
@@ -197,6 +197,12 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 case UPDATE_UI:
                     if (!isEdit)
                         updateUI();
+                    break;
+                case UPDATE:
+                    userDone = false;
+                    isEdit = false;
+                    initAnimation();
+                    getStatusOfDevice();
                     break;
                 case DISCONNECT:
                     toastDeviceDisconnectAndExit();
@@ -706,9 +712,10 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
         nice_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(baseBean==null){
+                if (baseBean == null) {
                     return;
                 }
+                optionType = position;
                 switch (position) {
                     case 0:
                         //手动
@@ -806,75 +813,27 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             textView_num.setText(20 + "");
         switch (type) {
             case 0:
-                if (selectedValue.size() < 1)
-                    selectedValue.add(0, value);
-                else
-                    selectedValue.set(0, value);
+                baseBean.getList().get(0).setNum(value);
                 break;
             case 1:
                 switch (selectedPosition) {
                     case 0:
-                        if (selectedValue.size() < 1)
-                            selectedValue.add(0, value);
-                        else
-                            selectedValue.set(0, value);
                         left_double_textView.setText(value + "℃");
+                        baseBean.getList().get(0).setNum(value);
                         break;
                     case 1:
-                        if (selectedValue.size() < 2)
-                            selectedValue.add(0, value);
-                        else
-                            selectedValue.set(0, value);
                         right_double_textView.setText(value + "℃");
+                        baseBean.getList().get(1).setNum(value);
                         break;
                 }
                 break;
             case 2:
-                switch (selectedPosition) {
-                    case 0:
-                        if (selectedValue.size() < 1)
-                            selectedValue.add(0, value);
-                        else
-                            selectedValue.set(0, value);
-                        left_one_textView.setText(value + "℃");
-                        break;
-                    case 1:
-                        if (selectedValue.size() < 2)
-                            selectedValue.add(1, value);
-                        else
-                            selectedValue.set(1, value);
-                        right_one_textView.setText(value + "℃");
-                        break;
-                    case 2:
-                        if (selectedValue.size() < 3)
-                            selectedValue.add(2, value);
-                        else
-                            selectedValue.set(2, value);
-                        left_two_textView.setText(value + "℃");
-                        break;
-                    case 3:
-                        if (selectedValue.size() < 4)
-                            selectedValue.add(3, value);
-                        else
-                            selectedValue.set(3, value);
-                        right_two_textView.setText(value + "℃");
-                        break;
-                    case 4:
-                        if (selectedValue.size() < 5)
-                            selectedValue.add(4, value);
-                        else
-                            selectedValue.set(4, value);
-                        left_three_textView.setText(value + "℃");
-                        break;
-                    case 5:
-                        if (selectedValue.size() < 6)
-                            selectedValue.add(5, value);
-                        else
-                            selectedValue.set(5, value);
-                        right_three_textView.setText(value + "℃");
-                        break;
+                for (int i = 0; i < baseBean.getList().size(); i++) {
+                    if (selectedPosition == i) {
+                        viewBeanArrayList.get(i).getTextView().setText(value + "℃");
+                        baseBean.getList().get(i).setNum(value);
+                    }
                 }
-                break;
         }
     }
 
@@ -1509,36 +1468,37 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
     private void isChange() {
         switch (type) {
             case 0:
-                if (selectedValue.get(0) != Temp_Left1) {
+                if (baseBean.getList().get(0).getNum() != Temp_Left1) {
                     //温度不同时才上传
                     userDone = true;
                 }
                 break;
             case 1:
-                if (selectedValue.get(0) != Temp_Left1) {
+
+                if (baseBean.getList().get(0).getNum() != Temp_Left1) {
                     userDone = true;
                 }
-                if (selectedValue.get(1) != Temp_Right1) {
+                if (baseBean.getList().get(1).getNum() != Temp_Right1) {
                     userDone = true;
                 }
                 break;
             case 2:
-                if (selectedValue.get(0) != Temp_Left1) {
+                if (baseBean.getList().get(0).getNum() != Temp_Left1) {
                     userDone = true;
                 }
-                if (selectedValue.get(1) != Temp_Left2) {
+                if (baseBean.getList().get(1).getNum() != Temp_Left2) {
                     userDone = true;
                 }
-                if (selectedValue.get(2) != Temp_Left3) {
+                if (baseBean.getList().get(2).getNum() != Temp_Left3) {
                     userDone = true;
                 }
-                if (selectedValue.get(3) != Temp_Right1) {
+                if (baseBean.getList().get(3).getNum() != Temp_Right1) {
                     userDone = true;
                 }
-                if (selectedValue.get(4) != Temp_Right2) {
+                if (baseBean.getList().get(4).getNum() != Temp_Right2) {
                     userDone = true;
                 }
-                if (selectedValue.get(5) != Temp_Right3) {
+                if (baseBean.getList().get(5).getNum() != Temp_Right3) {
                     userDone = true;
                 }
                 break;
@@ -1562,47 +1522,48 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             switch (type) {
                 case 0:
                     hashMap.put(KEY_DATA15, switch1.isChecked());//单开关
-                    if (switch1.isChecked() && selectedValue.get(0) != Temp_Left1) {
+                    if (switch1.isChecked() && baseBean.getList().get(0).getNum() != Temp_Left1) {
                         //温度不同时才上传
-                        hashMap.put(KEY_DATA, selectedValue.get(0));
+                        hashMap.put(KEY_DATA, baseBean.getList().get(0).getNum());
                     }
                     break;
                 case 1:
                     hashMap.put(KEY_DATA15, switch2.isChecked());//左上温区开关
-                    if (switch2.isChecked() && selectedValue.get(0) != Temp_Left1) {
-                        hashMap.put(KEY_DATA, selectedValue.get(0));
+                    TemperatureBean tL = baseBean.getList().get(0);
+                    if (switch2.isChecked() && tL.getNum() != Temp_Left1) {
+                        hashMap.put(KEY_DATA, tL.getNum());
 
                     }
+                    TemperatureBean tR = baseBean.getList().get(1);
                     hashMap.put(KEY_DATA18, switch3.isChecked());//右上温区开关
-                    if (switch3.isChecked() && selectedValue.get(1) != Temp_Right1) {
-                        hashMap.put(KEY_DATA3, selectedValue.get(1));
-
+                    if (switch3.isChecked() && tR.getNum() != Temp_Right1) {
+                        hashMap.put(KEY_DATA3, tR.getNum());
                     }
                     break;
                 case 2:
                     hashMap.put(KEY_DATA15, switch4.isChecked());//左上温区开关
-                    if (switch4.isChecked() && selectedValue.get(0) != Temp_Left1) {
-                        hashMap.put(KEY_DATA, selectedValue.get(0));
+                    if (switch4.isChecked() && baseBean.getList().get(0).getNum() != Temp_Left1) {
+                        hashMap.put(KEY_DATA, baseBean.getList().get(0).getNum());
                     }
                     hashMap.put(KEY_DATA16, switch6.isChecked());//左中温区开关
-                    if (switch6.isChecked() && selectedValue.get(1) != Temp_Left2) {
-                        hashMap.put(KEY_DATA1, selectedValue.get(1));
+                    if (switch6.isChecked() && baseBean.getList().get(1).getNum() != Temp_Left2) {
+                        hashMap.put(KEY_DATA1, baseBean.getList().get(1).getNum());
                     }
                     hashMap.put(KEY_DATA17, switch8.isChecked());//左下温区开关
-                    if (switch8.isChecked() && selectedValue.get(2) != Temp_Left3) {
-                        hashMap.put(KEY_DATA2, selectedValue.get(2));
+                    if (switch8.isChecked() && baseBean.getList().get(2).getNum()!= Temp_Left3) {
+                        hashMap.put(KEY_DATA2, baseBean.getList().get(2).getNum());
                     }
                     hashMap.put(KEY_DATA18, switch5.isChecked());//右上温区开关
-                    if (switch5.isChecked() && selectedValue.get(3) != Temp_Right1) {
-                        hashMap.put(KEY_DATA3, selectedValue.get(3));
+                    if (switch5.isChecked() && baseBean.getList().get(3).getNum() != Temp_Right1) {
+                        hashMap.put(KEY_DATA3, baseBean.getList().get(3).getNum());
                     }
                     hashMap.put(KEY_DATA19, switch7.isChecked());//右中温区开关
-                    if (switch7.isChecked() && selectedValue.get(4) != Temp_Right2) {
-                        hashMap.put(KEY_DATA4, selectedValue.get(4));
+                    if (switch7.isChecked() && baseBean.getList().get(4).getNum()!= Temp_Right2) {
+                        hashMap.put(KEY_DATA4, baseBean.getList().get(4).getNum());
                     }
                     hashMap.put(KEY_DATA20, switch9.isChecked());//右下温区开关
-                    if (switch9.isChecked() && selectedValue.get(5) != Temp_Right3) {
-                        hashMap.put(KEY_DATA5, selectedValue.get(5));
+                    if (switch9.isChecked() && baseBean.getList().get(5).getNum() != Temp_Right3) {
+                        hashMap.put(KEY_DATA5, baseBean.getList().get(5).getNum());
                     }
                     break;
             }
@@ -1833,11 +1794,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 mHandler.sendEmptyMessage(handler_key.UPDATE_UI.ordinal());
             } else {
                 myToast("提交成功");
-                userDone = false;
-                isEdit = false;
-                initAnimation();
-                getStatusOfDevice();
-
+                mHandler.sendEmptyMessage(handler_key.UPDATE.ordinal());
             }
         }
     }

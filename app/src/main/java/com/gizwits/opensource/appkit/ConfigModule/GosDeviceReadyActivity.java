@@ -102,7 +102,7 @@ public class GosDeviceReadyActivity extends GosConfigModuleBaseActivity implemen
 			break;
 
 		case R.id.btnNext:
-			Intent intent2 = new Intent(GosDeviceReadyActivity.this, GosChooseDeviceActivity.class);
+			Intent intent2 = new Intent(GosDeviceReadyActivity.this, GosAirlinkConfigCountdownActivity.class);
 			startActivity(intent2);
 			finish();
 			break;

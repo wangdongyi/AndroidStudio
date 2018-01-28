@@ -124,7 +124,7 @@
         <EditText
             android:id="@+id/etPsw"
             style="@style/EditTextStyle"
-            android:layout_width="0dp"
+            android:layout_width="282dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="7dp"
             android:layout_weight="1"
@@ -138,7 +138,7 @@
 
         <CheckBox
             android:id="@+id/cbLaws"
-            android:layout_width="25dp"
+            android:layout_width="16dp"
             android:layout_height="15dp"
             android:layout_marginBottom="15dp"
             android:layout_marginRight="20dp"

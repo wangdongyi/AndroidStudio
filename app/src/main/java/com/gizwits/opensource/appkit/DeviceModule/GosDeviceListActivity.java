@@ -565,9 +565,11 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
         ProductKeyList = GosDeploy.setProductKeyList();
         uid = spf.getString("Uid", "");
         token = spf.getString("Token", "");
-
         if (uid.isEmpty() && token.isEmpty()) {
             loginStatus = 0;
+            Intent intent = new Intent(GosDeviceListActivity.this, GosUserLoginActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
@@ -591,9 +593,7 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
             //  绑定推送
             GosPushManager.pushBindService(token);
         } else {
-            Intent intent = new Intent(GosDeviceListActivity.this, GosUserLoginActivity.class);
-            startActivity(intent);
-            finish();
+            GizWifiSDK.sharedInstance().userLogin(spf.getString("Uid", ""), spf.getString("Token", ""));
         }
     }
 

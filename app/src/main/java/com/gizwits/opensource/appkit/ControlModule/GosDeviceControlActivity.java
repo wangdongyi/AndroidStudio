@@ -716,6 +716,9 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                     return;
                 }
                 optionType = position;
+                if(baseBean.getType()!=optionType){
+                    userDone=true;
+                }
                 switch (position) {
                     case 0:
                         //手动

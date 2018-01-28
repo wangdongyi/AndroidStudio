@@ -82,7 +82,7 @@ public class GosAirlinkReadyActivity extends GosConfigModuleBaseActivity impleme
 		int setModuleSelectOn = GosDeploy.setModuleSelectOn();
 
 		if (setModuleSelectOn == 0) {
-			moudlechoose.setVisibility(View.VISIBLE);
+			moudlechoose.setVisibility(View.INVISIBLE);
 		} else {
 			moudlechoose.setVisibility(View.INVISIBLE);
 		}

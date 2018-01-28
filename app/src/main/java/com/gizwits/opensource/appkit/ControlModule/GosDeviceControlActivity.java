@@ -407,6 +407,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
         imageView_open_button.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
+                userDone=false;
                 isEdit = true;
                 initAnimation();
             }

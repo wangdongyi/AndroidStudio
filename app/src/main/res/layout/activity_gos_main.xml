@@ -34,7 +34,7 @@
                 android:id="@+id/img1"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:background="@drawable/grid_grey" />
+                android:background="@drawable/grid" />
 
             <TextView
                 android:id="@+id/tx1"
@@ -43,7 +43,7 @@
                 android:layout_marginTop="2dp"
                 android:gravity="center"
                 android:text="@string/devicelist_title"
-                android:textColor="@color/gray"
+                android:textColor="@color/top_color"
                 android:textSize="11.0dip" />
         </LinearLayout>
 

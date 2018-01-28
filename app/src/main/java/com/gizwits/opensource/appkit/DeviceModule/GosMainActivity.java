@@ -209,7 +209,7 @@ public class GosMainActivity extends GosDeviceModuleBaseActivity {
         img2.setBackgroundResource(R.drawable.message_grey);
         img3.setBackgroundResource(R.drawable.user_grey);
 
-        tx1.setTextColor(getResources().getColor(R.color.black));
+        tx1.setTextColor(getResources().getColor(R.color.top_color));
         tx2.setTextColor(getResources().getColor(R.color.gray));
         tx3.setTextColor(getResources().getColor(R.color.gray));
         setActionBar(false, false, R.string.devicelist_title);

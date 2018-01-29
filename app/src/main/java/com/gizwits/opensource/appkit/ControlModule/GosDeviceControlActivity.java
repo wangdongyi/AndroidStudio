@@ -396,11 +396,13 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                             dialog.dismiss();
                             isEdit = false;
                             initAnimation();
+                            getStatusOfDevice();
                         }
                     });
                 } else {
                     isEdit = false;
                     initAnimation();
+                    getStatusOfDevice();
                 }
             }
         });

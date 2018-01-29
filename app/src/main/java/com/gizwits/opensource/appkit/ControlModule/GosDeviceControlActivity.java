@@ -407,7 +407,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
         imageView_open_button.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
-                userDone=false;
+                userDone = false;
                 isEdit = true;
                 initAnimation();
             }
@@ -435,84 +435,114 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             @SuppressLint("SetTextI18n")
             @Override
             protected void onNoDoubleClick(View v) {
-                TimeShow(starHour, starMinute, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        userDone = true;
-                        starHour = hourOfDay;
-                        starMinute = minute;
-                        textView_start_time.setText((starHour < 10 ? "0" + starHour : starHour) + ":" + (starMinute < 10 ? "0" + starMinute : starMinute));
-                    }
-                });
+                if (switch11.isChecked()) {
+                    TimeShow(starHour, starMinute, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            userDone = true;
+                            starHour = hourOfDay;
+                            starMinute = minute;
+                            textView_start_time.setText((starHour < 10 ? "0" + starHour : starHour) + ":" + (starMinute < 10 ? "0" + starMinute : starMinute));
+                        }
+                    });
+                } else {
+                    myToast("设备关机中不能修改");
+                }
+
             }
         });
         end_time_layout.setOnClickListener(new NoDoubleClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             protected void onNoDoubleClick(View v) {
-                TimeShow(endHour, endMinute, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        userDone = true;
-                        endHour = hourOfDay;
-                        endMinute = minute;
-                        textView_end_time.setText((endHour < 10 ? "0" + endHour : endHour) + ":" + (endMinute < 10 ? "0" + endMinute : endMinute));
-                    }
-                });
+                if (switch11.isChecked()) {
+                    TimeShow(endHour, endMinute, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            userDone = true;
+                            endHour = hourOfDay;
+                            endMinute = minute;
+                            textView_end_time.setText((endHour < 10 ? "0" + endHour : endHour) + ":" + (endMinute < 10 ? "0" + endMinute : endMinute));
+                        }
+                    });
+                } else {
+                    myToast("设备关机中不能修改");
+                }
+
             }
         });
         qualified_layout.setOnClickListener(new NoDoubleClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             protected void onNoDoubleClick(View v) {
-                TimeShow(timingHour, timingMinute, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        userDone = true;
-                        timingHour = hourOfDay;
-                        timingMinute = minute;
-                        textView_qualified_time.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
-                    }
-                });
+                if (switch11.isChecked()) {
+                    TimeShow(timingHour, timingMinute, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            userDone = true;
+                            timingHour = hourOfDay;
+                            timingMinute = minute;
+                            textView_qualified_time.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
+                        }
+                    });
+                } else {
+                    myToast("设备关机中不能修改");
+                }
+
 
             }
         });
         repeatlayout.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
-                userDone = true;
-                Intent intent = new Intent(GosDeviceControlActivity.this, SelectedWeekActivity.class);
-                startActivity(intent);
+                if (switch11.isChecked()) {
+                    userDone = true;
+                    Intent intent = new Intent(GosDeviceControlActivity.this, SelectedWeekActivity.class);
+                    startActivity(intent);
+                } else {
+                    myToast("设备关机中不能修改");
+                }
+
             }
         });
         qualified_layout_left.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
-                //双温区-左-定时时间
-                TimeShow(timingHour, timingMinute, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        userDone = true;
-                        timingHour = hourOfDay;
-                        timingMinute = minute;
-                        textView_qualified_time_left.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
-                    }
-                });
+                if (switch11.isChecked()) {
+                    //双温区-左-定时时间
+                    TimeShow(timingHour, timingMinute, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            userDone = true;
+                            timingHour = hourOfDay;
+                            timingMinute = minute;
+                            textView_qualified_time_left.setText((timingHour < 10 ? "0" + timingHour : timingHour) + ":" + (timingMinute < 10 ? "0" + timingMinute : timingMinute));
+                        }
+                    });
+                } else {
+                    myToast("设备关机中不能修改");
+                }
+
             }
         });
         qualified_layout_right.setOnClickListener(new NoDoubleClickListener() {
             @Override
             protected void onNoDoubleClick(View v) {
-                //双温区-右-定时时间
-                TimeShow(Hour_double, Minutes_double, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        userDone = true;
-                        Hour_double = hourOfDay;
-                        Minutes_double = minute;
-                        textView_qualified_time_right.setText((Hour_double < 10 ? "0" + Hour_double : Hour_double) + ":" + (Minutes_double < 10 ? "0" + Minutes_double : Minutes_double));
-                    }
-                });
+                if (switch11.isChecked()) {
+                    //双温区-右-定时时间
+                    TimeShow(Hour_double, Minutes_double, new TimePickerDialog.OnTimeSetListener() {
+                        @Override
+                        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                            userDone = true;
+                            Hour_double = hourOfDay;
+                            Minutes_double = minute;
+                            textView_qualified_time_right.setText((Hour_double < 10 ? "0" + Hour_double : Hour_double) + ":" + (Minutes_double < 10 ? "0" + Minutes_double : Minutes_double));
+                        }
+                    });
+                } else {
+                    myToast("设备关机中不能修改");
+                }
+
             }
         });
         left_double_layout.setOnClickListener(new OnClickListener() {
@@ -717,8 +747,8 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                     return;
                 }
                 optionType = position;
-                if(baseBean.getType()!=optionType){
-                    userDone=true;
+                if (baseBean.getType() != optionType) {
+                    userDone = true;
                 }
                 switch (position) {
                     case 0:
@@ -1272,6 +1302,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             switch8.setEnabled(false);
             switch9.setEnabled(false);
             switch10.setEnabled(false);
+            nice_spinner.setEnabled(false);
         } else {
             switch1.setEnabled(true);
             switch2.setEnabled(true);
@@ -1293,7 +1324,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             switch8.setChecked(switch4Selected);
             switch9.setChecked(switch7Selected);
             switch10.setChecked(switch8Selected);
-
+            nice_spinner.setEnabled(true);
         }
     }
 
@@ -1332,6 +1363,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             switch8.setEnabled(true);
             switch9.setEnabled(true);
             switch10.setEnabled(true);
+            nice_spinner.setEnabled(true);
         } else {
             switch1.setEnabled(false);
             switch2.setEnabled(false);
@@ -1343,6 +1375,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             switch8.setEnabled(false);
             switch9.setEnabled(false);
             switch10.setEnabled(false);
+            nice_spinner.setEnabled(false);
         }
     }
 
@@ -1554,7 +1587,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                         hashMap.put(KEY_DATA1, baseBean.getList().get(1).getNum());
                     }
                     hashMap.put(KEY_DATA17, switch8.isChecked());//左下温区开关
-                    if (switch8.isChecked() && baseBean.getList().get(2).getNum()!= Temp_Left3) {
+                    if (switch8.isChecked() && baseBean.getList().get(2).getNum() != Temp_Left3) {
                         hashMap.put(KEY_DATA2, baseBean.getList().get(2).getNum());
                     }
                     hashMap.put(KEY_DATA18, switch5.isChecked());//右上温区开关
@@ -1562,7 +1595,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                         hashMap.put(KEY_DATA3, baseBean.getList().get(3).getNum());
                     }
                     hashMap.put(KEY_DATA19, switch7.isChecked());//右中温区开关
-                    if (switch7.isChecked() && baseBean.getList().get(4).getNum()!= Temp_Right2) {
+                    if (switch7.isChecked() && baseBean.getList().get(4).getNum() != Temp_Right2) {
                         hashMap.put(KEY_DATA4, baseBean.getList().get(4).getNum());
                     }
                     hashMap.put(KEY_DATA20, switch9.isChecked());//右下温区开关

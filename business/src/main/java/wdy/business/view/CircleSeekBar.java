@@ -203,7 +203,7 @@ public class CircleSeekBar extends View {
         }
         isHasCache = a.getBoolean(R.styleable.CircleSeekBar_wheel_has_cache, isHasWheelShadow);
         isCanTouch = a.getBoolean(R.styleable.CircleSeekBar_wheel_can_touch, true);
-        isScrollOneCircle = a.getBoolean(R.styleable.CircleSeekBar_wheel_scroll_only_one_circle, false);
+        isScrollOneCircle = a.getBoolean(R.styleable.CircleSeekBar_wheel_scroll_only_one_circle, true);
 
         if (isHasPointerShadow | isHasWheelShadow) {
             setSoftwareLayer();

@@ -33,6 +33,12 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
     protected static final String KEY_DATA3 = "Temp_Right1";
     protected static final String KEY_DATA4 = "Temp_Right2";
     protected static final String KEY_DATA5 = "Temp_Right3";
+    protected static final String Left1 = "TempRealLeft1";
+    protected static final String Left2 = "TempRealLeft2";
+    protected static final String Left3 = "TempRealLeft3";
+    protected static final String Right1 = "TempRealRight1";
+    protected static final String Right2 = "TempRealRight2";
+    protected static final String Right3 = "TempRealRight3";
     protected static final String KEY_DATA6 = "StartTimeHour";
     protected static final String KEY_DATA7 = "StartTimeMin";
     protected static final String KEY_DATA8 = "CloseTimeHour";
@@ -77,6 +83,12 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
     protected static int Temp_Right1;
     protected static int Temp_Right2;
     protected static int Temp_Right3;
+    protected static int TempRealLeft1;
+    protected static int TempRealLeft2;
+    protected static int TempRealLeft3;
+    protected static int TempRealRight1;
+    protected static int TempRealRight2;
+    protected static int TempRealRight3;
     protected static int StartTimeHour;
     protected static int StartTimeMin;
     protected static int CloseTimeHour;
@@ -110,6 +122,7 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
     protected static final String PRODUCT_KEY = "productKey";
     protected BaseBean baseBean;
     protected ArrayList<TemperatureBean> temperatureBeanArrayList = new ArrayList<>();
+    protected ArrayList<Integer> temperatureArrayList = new ArrayList<>();
     protected int type = 0;
     private Toast mToast;
 
@@ -123,6 +136,9 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
                 switch (dataKey) {
                     case KEY_DATA:
                         Temp_Left1 = (Integer) map.get(dataKey);
+                        if (Temp_Left1 > 60) {
+                            Temp_Left1 = 60;
+                        }
                         if (Temp_Left1 > 60) {
                             Temp_Left1 = 60;
                         }
@@ -156,6 +172,24 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
                         if (Temp_Right3 > 60) {
                             Temp_Right3 = 60;
                         }
+                        break;
+                    case Left1:
+                        TempRealLeft1 = (Integer) map.get(dataKey);
+                        break;
+                    case Left2:
+                        TempRealLeft2 = (Integer) map.get(dataKey);
+                        break;
+                    case Left3:
+                        TempRealLeft3 = (Integer) map.get(dataKey);
+                        break;
+                    case Right1:
+                        TempRealRight1 = (Integer) map.get(dataKey);
+                        break;
+                    case Right2:
+                        TempRealRight2 = (Integer) map.get(dataKey);
+                        break;
+                    case Right3:
+                        TempRealRight3 = (Integer) map.get(dataKey);
                         break;
                     case KEY_DATA6:
                         StartTimeHour = (Integer) map.get(dataKey);
@@ -259,6 +293,13 @@ public class GosControlModuleBaseActivity extends GosBaseActivity {
             baseBean = new BaseBean();
             baseBean.setList(temperatureBeanArrayList);
         }
+        temperatureArrayList.clear();
+        temperatureArrayList.add(TempRealLeft1);
+        temperatureArrayList.add(TempRealLeft2);
+        temperatureArrayList.add(TempRealLeft3);
+        temperatureArrayList.add(TempRealRight1);
+        temperatureArrayList.add(TempRealRight2);
+        temperatureArrayList.add(TempRealRight3);
         baseBean.setAllSwitch(switch1Selected);
         if (mode > 2) {
             mode = 0;

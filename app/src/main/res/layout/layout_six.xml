@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_six_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/line"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/line"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/left_one_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/top_color"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/switch4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="47dp"
+                    android:checked="true"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:textColor="@color/text_black"
+                    android:textOff=""
+                    android:textOn=""
+                    android:thumb="@drawable/my_thumb"
+                    android:track="@drawable/switch_setting_selector" />
+
+                <TextView
+                    android:id="@+id/left_one_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="77dp"
+                    android:text="20℃"
+                    android:textColor="@color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
+            <TextView
+                android:id="@+id/left_one_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="5dp"
+                android:text="左上温区"
+                android:textColor="@color/white"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/right_one_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Switch
+                    android:id="@+id/switch5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="47dp"
+                    android:checked="true"
+                    android:scaleX="0.5"
+                    android:scaleY="0.5"
+                    android:textColor="@color/text_black"
+                    android:textOff=""
+                    android:textOn=""
+                    android:thumb="@drawable/my_thumb"
+                    android:track="@drawable/switch_setting_selector" />
+
+                <TextView
+                    android:id="@+id/right_one_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="77dp"
+                    android:text="20℃"
+                    android:textColor="@color/text_black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/right_one_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="5dp"
+                android:text="右上温区"
+                android:textColor="@color/text_grey"
+                android:textSize="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="109dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/line"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/left_two_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/switch6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:checked="true"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:textColor="@color/text_black"
+                android:textOff=""
+                android:textOn=""
+                android:thumb="@drawable/my_thumb"
+                android:track="@drawable/switch_setting_selector" />
+
+            <TextView
+                android:id="@+id/left_two_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:text="20℃"
+                android:textColor="@color/text_black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/left_two_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="左中温区"
+                android:textColor="@color/text_grey"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/right_two_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/switch7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:checked="true"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:textColor="@color/text_black"
+                android:textOff=""
+                android:textOn=""
+                android:thumb="@drawable/my_thumb"
+                android:track="@drawable/switch_setting_selector" />
+
+            <TextView
+                android:id="@+id/right_two_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:text="20℃"
+                android:textColor="@color/text_black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/right_two_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="右中温区"
+                android:textColor="@color/text_grey"
+                android:textSize="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="109dp"
+        android:layout_marginTop="0.5dp"
+        android:background="@color/line"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/left_three_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/switch8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:checked="true"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:textColor="@color/text_black"
+                android:textOff=""
+                android:textOn=""
+                android:thumb="@drawable/my_thumb"
+                android:track="@drawable/switch_setting_selector" />
+
+            <TextView
+                android:id="@+id/left_three_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:text="20℃"
+                android:textColor="@color/text_black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/left_three_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="左下温区"
+                android:textColor="@color/text_grey"
+                android:textSize="14dp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/right_three_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Switch
+                android:id="@+id/switch9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:checked="true"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:textColor="@color/text_black"
+                android:textOff=""
+                android:textOn=""
+                android:thumb="@drawable/my_thumb"
+                android:track="@drawable/switch_setting_selector" />
+
+            <TextView
+                android:id="@+id/right_three_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:text="20℃"
+                android:textColor="@color/text_black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/right_three_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="右下温区"
+                android:textColor="@color/text_grey"
+                android:textSize="14dp" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

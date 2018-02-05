@@ -3,41 +3,30 @@ package com.gizwits.opensource.appkit.ControlModule;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewAnimationUtils;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -48,14 +37,10 @@ import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
 import com.gizwits.opensource.appkit.CommonModule.MyGizWifiDevice;
 import com.gizwits.opensource.appkit.R;
 
-import org.angmarch.views.NiceSpinner;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import wdy.business.event.MessageEvent;
@@ -158,6 +143,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
     private Switch switch10;
     private TextView close_button;
     private Switch switch11;
+    private TextView temp_textView;
     private TextView textView_qualified_left;
     private TextView textView_qualified_time_left;
     private RelativeLayout qualified_layout_left;
@@ -304,6 +290,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
         textView_qualified_time_right = (TextView) findViewById(R.id.textView_qualified_time_right);
         qualified_layout_right = (RelativeLayout) findViewById(R.id.qualified_layout_right);
         qualified_layout_double = (LinearLayout) findViewById(R.id.qualified_layout_double);
+        temp_textView = (TextView) findViewById(R.id.temp_textView);
         buildItem(left_one_layout, left_one_textView, switch4, true);
         buildItem(left_two_layout, left_two_textView, switch6, false);
         buildItem(left_three_layout, left_three_textView, switch8, false);
@@ -557,7 +544,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 right_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 circle_seekBar.setCurProcess(baseBean.getList().get(0).getNum() - 20);
                 if (switch2.isChecked()) {
-                    left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
+                    left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.selected_color));
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
                     imageView_jia.setClickable(true);
@@ -584,7 +571,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 left_double_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 left_double_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_black));
                 if (switch3.isChecked()) {
-                    right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
+                    right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.selected_color));
                     circle_seekBar.setEnabled(true);
                     imageView_jian.setClickable(true);
                     imageView_jia.setClickable(true);
@@ -665,7 +652,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 userDone = true;
                 if (isChecked) {
                     if (selectedPosition == 0) {
-                        left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
+                        left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.selected_color));
                     } else {
                         left_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                     }
@@ -687,7 +674,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 userDone = true;
                 if (isChecked) {
                     if (selectedPosition == 1) {
-                        right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.top_color));
+                        right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.selected_color));
                     } else {
                         right_double_layout.setBackgroundColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
                     }
@@ -854,11 +841,9 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             case 1:
                 switch (selectedPosition) {
                     case 0:
-                        left_double_textView.setText(value + "℃");
                         baseBean.getList().get(0).setNum(value);
                         break;
                     case 1:
-                        right_double_textView.setText(value + "℃");
                         baseBean.getList().get(1).setNum(value);
                         break;
                 }
@@ -866,7 +851,6 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             case 2:
                 for (int i = 0; i < baseBean.getList().size(); i++) {
                     if (selectedPosition == i) {
-                        viewBeanArrayList.get(i).getTextView().setText(value + "℃");
                         baseBean.getList().get(i).setNum(value);
                     }
                 }
@@ -914,7 +898,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
         switch (selectedPosition) {
             case 0:
                 if (switch4.isChecked())
-                    left_one_layout.setBackgroundResource(R.color.top_color);
+                    left_one_layout.setBackgroundResource(R.color.selected_color);
                 else
                     left_one_layout.setBackgroundResource(R.color.gray);
                 left_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
@@ -972,7 +956,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 left_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
                 if (switch5.isChecked())
-                    right_one_layout.setBackgroundResource(R.color.top_color);
+                    right_one_layout.setBackgroundResource(R.color.selected_color);
                 else
                     right_one_layout.setBackgroundResource(R.color.gray);
                 right_one_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
@@ -1030,7 +1014,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 right_one_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
                 if (switch6.isChecked())
-                    left_two_layout.setBackgroundResource(R.color.top_color);
+                    left_two_layout.setBackgroundResource(R.color.selected_color);
                 else
                     left_two_layout.setBackgroundResource(R.color.gray);
                 left_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
@@ -1088,7 +1072,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 left_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
                 if (switch7.isChecked())
-                    right_two_layout.setBackgroundResource(R.color.top_color);
+                    right_two_layout.setBackgroundResource(R.color.selected_color);
                 else
                     right_two_layout.setBackgroundResource(R.color.gray);
                 right_two_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
@@ -1146,7 +1130,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 right_two_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
                 if (switch8.isChecked())
-                    left_three_layout.setBackgroundResource(R.color.top_color);
+                    left_three_layout.setBackgroundResource(R.color.selected_color);
                 else
                     left_three_layout.setBackgroundResource(R.color.gray);
                 left_three_textView.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.white));
@@ -1204,7 +1188,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 left_three_hint.setTextColor(ContextCompat.getColor(GosDeviceControlActivity.this, R.color.text_grey));
 
                 if (switch9.isChecked())
-                    right_three_layout.setBackgroundResource(R.color.top_color);
+                    right_three_layout.setBackgroundResource(R.color.selected_color);
                 else
                     right_three_layout.setBackgroundResource(R.color.gray);
                 if (switch9.isChecked()) {
@@ -1452,6 +1436,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
         initType(type);
         switch (type) {
             case 0:
+                temp_textView.setText("当前温度："+TempRealLeft1+"℃");
                 TemperatureBean temperatureBean = baseBean.getList().get(0);
                 if (baseBean.getAllSwitch()) {
                     switch1.setChecked(temperatureBean.getSelected());
@@ -1463,8 +1448,8 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
             case 1:
                 TemperatureBean tL = baseBean.getList().get(0);
                 TemperatureBean tR = baseBean.getList().get(1);
-                left_double_textView.setText(tL.getNum() + "℃");
-                right_double_textView.setText(tR.getNum() + "℃");
+                left_double_textView.setText(TempRealLeft1 + "℃");
+                right_double_textView.setText(TempRealRight1 + "℃");
                 if (baseBean.getAllSwitch()) {
                     switch2.setChecked(tL.getSelected());
                     switch3.setChecked(tR.getSelected());
@@ -1482,7 +1467,7 @@ public class GosDeviceControlActivity extends GosControlModuleBaseActivity {
                 for (int i = 0; i < viewBeanArrayList.size(); i++) {
                     ItemViewBean viewBean = viewBeanArrayList.get(i);
                     TemperatureBean tBS = baseBean.getList().get(i);
-                    viewBean.getTextView().setText(tBS.getNum() + "℃");
+                    viewBean.getTextView().setText(temperatureArrayList.get(i) + "℃");
                     if (baseBean.getAllSwitch()) {
                         viewBean.getaSwitch().setChecked(tBS.getSelected());
                     } else {

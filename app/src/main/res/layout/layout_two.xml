@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@color/top_color"
+            android:background="@color/selected_color"
             android:gravity="center"
             android:orientation="vertical">
 

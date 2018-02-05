@@ -61,40 +61,41 @@ public class LoadingActivity extends GosUserModuleBaseActivity {
     }
 
     private void getTime() {
-        if (NetUtil.getNetWorkType(this) != 0) {
-            URL url = null;//取得资源对象
-            try {
-                url = new URL("http://www.baidu.com");
-                URLConnection uc = url.openConnection();//生成连接对象
-                uc.connect(); //发出连接
-                final long ld = uc.getDate(); //取得网站日期时间
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (ld < NetUtil.getTime("2018-02-01 00:00:00")) {
-                            autoLogin();
-                        } else {
-                            Toast.makeText(LoadingActivity.this, "试用期已过", Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (System.currentTimeMillis() < NetUtil.getTime("2018-02-01 00:00:00")) {
-                        autoLogin();
-                    } else {
-                        Toast.makeText(LoadingActivity.this, "试用期已过", Toast.LENGTH_LONG).show();
-                        finish();
-                    }
-                }
-            });
-        }
+        autoLogin();
+//        if (NetUtil.getNetWorkType(this) != 0) {
+//            URL url = null;//取得资源对象
+//            try {
+//                url = new URL("http://www.baidu.com");
+//                URLConnection uc = url.openConnection();//生成连接对象
+//                uc.connect(); //发出连接
+//                final long ld = uc.getDate(); //取得网站日期时间
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (ld < NetUtil.getTime("2018-02-01 00:00:00")) {
+//                            autoLogin();
+//                        } else {
+//                            Toast.makeText(LoadingActivity.this, "试用期已过", Toast.LENGTH_LONG).show();
+//                            finish();
+//                        }
+//                    }
+//                });
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        } else {
+//            runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    if (System.currentTimeMillis() < NetUtil.getTime("2018-02-01 00:00:00")) {
+//                        autoLogin();
+//                    } else {
+//                        Toast.makeText(LoadingActivity.this, "试用期已过", Toast.LENGTH_LONG).show();
+//                        finish();
+//                    }
+//                }
+//            });
+//        }
 
     }
 

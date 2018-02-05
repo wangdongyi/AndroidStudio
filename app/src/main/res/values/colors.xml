@@ -28,6 +28,7 @@
     <color name="sample_deploy">#007AFF</color>
     <color name="text_color">#333333</color>
     <color name="top_color">#86D4BF</color>
+    <color name="selected_color">#6fcab2</color>
     <color name="text_black">#666666</color>
     <color name="text_red">#ed1b4c</color>
     <color name="text_grey">#96a1b0</color>

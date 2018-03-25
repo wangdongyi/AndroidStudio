@@ -101,13 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/pic01" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/pic02" />
+                android:src="@mipmap/xuanchuan" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -118,25 +112,38 @@
                 android:orientation="horizontal">
 
                 <ImageView
+                    android:id="@+id/icon1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/p1688" />
+                    android:src="@mipmap/icon01" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/line" />
 
                 <ImageView
+                    android:id="@+id/icon2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/weishang" />
+                    android:src="@mipmap/icon02" />
+
+                <View
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/line" />
 
                 <ImageView
+                    android:id="@+id/icon3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/tmall" />
+                    android:src="@mipmap/icon03" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

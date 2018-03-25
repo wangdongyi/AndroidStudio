@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.gizwits.gizwifisdk.enumration.GizWifiErrorCode;
+import com.gizwits.opensource.appkit.DeviceModule.GosDeviceListActivity;
 import com.gizwits.opensource.appkit.MessageCenter;
 import com.gizwits.opensource.appkit.R;
+import com.gizwits.opensource.appkit.UserModule.GosUserLoginActivity;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 
@@ -15,6 +17,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.ConnectivityManager;
@@ -370,6 +373,9 @@ public class GosBaseActivity extends FragmentActivity {
                 break;
             case GIZ_SDK_TOKEN_INVALID:
                 errorString = (String) getText(R.string.GIZ_SDK_TOKEN_INVALID);
+                Intent intent = new Intent(GosBaseActivity.this, GosUserLoginActivity.class);
+                startActivity(intent);
+                finish();
                 break;
             case GIZ_SDK_GROUP_ID_INVALID:
                 errorString = (String) getText(R.string.GIZ_SDK_GROUP_ID_INVALID);
@@ -470,12 +476,18 @@ public class GosBaseActivity extends FragmentActivity {
                 break;
             case GIZ_OPENAPI_TOKEN_INVALID:
                 errorString = (String) getText(R.string.GIZ_OPENAPI_TOKEN_INVALID);
+                Intent intent1 = new Intent(GosBaseActivity.this, GosUserLoginActivity.class);
+                startActivity(intent1);
+                finish();
                 break;
             case GIZ_OPENAPI_USER_NOT_EXIST:
                 errorString = (String) getText(R.string.GIZ_OPENAPI_USER_NOT_EXIST);
                 break;
             case GIZ_OPENAPI_TOKEN_EXPIRED:
                 errorString = (String) getText(R.string.GIZ_OPENAPI_TOKEN_EXPIRED);
+                Intent intent2 = new Intent(GosBaseActivity.this, GosUserLoginActivity.class);
+                startActivity(intent2);
+                finish();
                 break;
             case GIZ_OPENAPI_M2M_ID_INVALID:
                 errorString = (String) getText(R.string.GIZ_OPENAPI_M2M_ID_INVALID);

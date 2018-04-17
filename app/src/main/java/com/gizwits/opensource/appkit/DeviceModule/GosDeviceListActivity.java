@@ -743,8 +743,10 @@ public class GosDeviceListActivity extends GosDeviceModuleBaseActivity implement
                     myGizWifiDevice.setGizWifiDevice(gizWifiDevice);
                     boundDevicesList.add(myGizWifiDevice);
                 } else {
-                    myGizWifiDevice.setGizWifiDevice(gizWifiDevice);
-                    foundDevicesList.add(myGizWifiDevice);
+                    if (gizWifiDevice.getNetStatus() == GizWifiDeviceNetStatus.GizDeviceOnline) {
+                        myGizWifiDevice.setGizWifiDevice(gizWifiDevice);
+                        foundDevicesList.add(myGizWifiDevice);
+                    }
                 }
             } else {
                 MyGizWifiDevice myGizWifiDevice = new MyGizWifiDevice();

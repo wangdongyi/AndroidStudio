@@ -5,7 +5,7 @@ android {
     buildToolsVersion '26.0.3'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "com.gizwits.opensource.appkit"
+        applicationId "com.gizwits.opensource.appkit.wusheng"
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
